@@ -20,6 +20,7 @@
 <script type="text/javascript">
 	$(function(){
 		location.href="/board/select.do?sort=cno"; 	/* Public Board로 이동 */
+		/* branch Test */
 	});
 
 </script>
