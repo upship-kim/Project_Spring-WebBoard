@@ -54,10 +54,10 @@
 		<%-- ${list} --%>
 			<div class="sortOption">
 				<div class="sort">
-					<span><a href="#">최신순</a></span>
-					<span><a href="#">좋아요순</a></span>
+					<span><a href="/board/select.do?sort=cno">최신순</a></span>
+					<span><a href="/board/select.do?sort=lcount">좋아요순</a></span>
 					<span><a href="#">댓글순</a></span>
-					<span><a href="#">조회순</a></span>
+					<span><a href="/board/select.do?sort=viewcount">조회순</a></span>
 				</div>
 			</div>
 			<div class="searchOption">
@@ -83,12 +83,16 @@
 				<div class="second-wrap">
 					<div class="second-wrap-inline">
 						<div class="like-info">
-							<div class="like-info-icon">(좋아요)</div>
-							<div id="like"><h3>32</h3></div>
+							<ul>
+								<li class="like-info-icon"><img alt="" src="/board/view/img/like2.png"></li>
+								<li id="like"><h3>${i.lCount}</h3></li>
+					 		</ul>
 						</div>
 						<div class="reply-info">
-							<div class="reply-info-icon">(댓글)</div>
-							<div id="reply"><h3>32</h3></div>
+							<ul>
+							<li class="reply-info-icon"><img alt="" src="/board/view/img/reply.png"></li>
+							<li id="reply"><h3>32</h3></li>
+							</ul>
 						</div>
 					</div>
 				</div>

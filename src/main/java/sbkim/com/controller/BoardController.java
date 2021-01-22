@@ -69,10 +69,12 @@ public class BoardController {
 	
 	//PublicBoard - 게시물 출력
 	@RequestMapping(value="select.do")
-	public String selectBoard(Model model) {
-		System.out.println(dao.selectBoard());
-		/*List<BoardVO>list = new ArrayList<BoardVO>(); */
-		model.addAttribute("list", dao.selectBoard());
+	public String selectBoard(Model model, @RequestParam(value="sort")String sort) {
+		System.out.println(dao.selectBoard(sort));
+		model.addAttribute("list", dao.selectBoard(sort));		//게시판 목록 출력
+		//List<BoardVO>cnoList ; 								//for like Count Param
+		//cnoList=dao.selectBoard();
+		//dao.selectLikeCount(cnoList);		//조회수 출력
 		return "view/contents/publicBoard";
 	}
 	

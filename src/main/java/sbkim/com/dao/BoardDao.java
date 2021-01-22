@@ -1,5 +1,6 @@
 package sbkim.com.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -59,9 +60,13 @@ public class BoardDao extends SqlSessionDaoSupport {
 	}
 	
 	//board-select 
-	public List<BoardVO> selectBoard(){
+	public List<BoardVO> selectBoard(String sort){
 		System.out.println("dao: selectBaord");
-		return this.getSqlSession().selectList("selectBoard");
+		System.out.println(sort);
+		//HashMap<String, String>map = new HashMap<String, String>() ;
+		//map.put("sort", sort);
+		//System.out.println(map.get("sort"));
+		return this.getSqlSession().selectList("selectBoard", sort);
 	}
 	
 	//board - write
@@ -127,12 +132,22 @@ public class BoardDao extends SqlSessionDaoSupport {
 		}
 	}
 	
-	
 	//like - cancle
 	public void likeCancle(LikeVO vo) {
 			this.getSqlSession().update("likeCancle", vo);
 		
 	}
+	
+	/*//like - 게시물 당 전체 좋아요 수 출력 
+	public void selectLikeCount(List<BoardVO>totalList) {
+		System.out.println("dao cnoList: "+totalList);
+		List<Integer>cnoList; 
+		for(int i=0; i<totalList.size(); i++) {
+			cnoList = totalList.get(i).getCno());
+		}
+		
+		//return this.getSqlSession().selectOne("selectLikeCount", cno);
+	}*/
 
 	
 }

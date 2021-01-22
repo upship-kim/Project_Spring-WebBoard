@@ -146,7 +146,7 @@
 					</div>
 					<div class="infoSecondWrap">
 						<div>조회수: <span id="view">${info.viewCount}</span></div>
-						<div>좋아요: <span id="like">1</span></div>
+						<div>좋아요: <span id="like">1</span></div>	<!-- 전체 좋아요 수  -->
 						<div>등록일: <span id="regdate">${info.regdate }</span></div>
 					</div>
 				</div>
