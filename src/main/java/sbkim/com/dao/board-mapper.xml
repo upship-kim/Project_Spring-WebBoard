@@ -29,13 +29,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE U_ID=LOWER(#{VALUE})
 	</select>
 	
-	<select id="selectBoard" resultType="sbkim.com.vo.BoardVO" parameterType="String">
+	<select id="selectBoard" parameterType="String" resultType="sbkim.com.vo.BoardVO" >
 	    SELECT A.C_NO AS CNO, A.C_TITLE AS TITLE, A.C_CONTENTS AS CONTENTS, A.C_FILENAME AS FILENAME, A.C_VIEW AS VIEWCOUNT, TO_CHAR(A.C_REGDATE, 'YYYY/MM/DD HH24:MI')REGDATE, 
 	    	   A.C_CATEGORY AS CATEGORY, A.C_INFOCATEGORY AS INFOCATEGORY, A.U_ID AS UNO, NVL(B.L_COUNT, 0) AS LCOUNT
   		FROM WEBBOARD A LEFT JOIN (SELECT C_NO, SUM(L_COUNT)L_COUNT FROM WEBLIKE GROUP BY C_NO) B
   		ON A.C_NO = B.C_NO 
-   		WHERE C_CATEGORY='public'
-   		ORDER BY #{VALUE} DESC
+  		WHERE C_CATEGORY='public' 
+  		ORDER BY
+  		<choose>
+  		 <when test="map == 'cno'">CNO DESC</when>
+  		 <when test="map == 'lcount'">LCOUNT DESC</when>
+  		 <when test="map == 'viewcount'">VIEWCOUNT DESC</when>
+  		<otherwise>CATEGORY DESC</otherwise>
+  		</choose>
 	</select>
 	
 	<select id="writeContents" parameterType="sbkim.com.vo.BoardVO">

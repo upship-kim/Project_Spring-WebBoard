@@ -11,7 +11,7 @@ import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.data.mongodb.core.aggregation.VariableOperators.Map;
 
 import sbkim.com.vo.BoardVO;
 import sbkim.com.vo.LikeVO;
@@ -63,10 +63,10 @@ public class BoardDao extends SqlSessionDaoSupport {
 	public List<BoardVO> selectBoard(String sort){
 		System.out.println("dao: selectBaord");
 		System.out.println(sort);
-		//HashMap<String, String>map = new HashMap<String, String>() ;
-		//map.put("sort", sort);
-		//System.out.println(map.get("sort"));
-		return this.getSqlSession().selectList("selectBoard", sort);
+		HashMap<String, String>map1 = new HashMap<String, String>();
+		map1.put("map", sort);
+		System.out.println("이거:"+map1.get("map"));
+		return this.getSqlSession().selectList("selectBoard", map1);
 	}
 	
 	//board - write
