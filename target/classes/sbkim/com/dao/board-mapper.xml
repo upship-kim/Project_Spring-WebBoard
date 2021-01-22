@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sbkim.com.vo.UserVO">
+
+	<select id="selectUser" resultType="sbkim.com.vo.UserVO">
+		SELECT * FROM WEBUSER
+	</select>
+	
+	<select id="selectId" parameterType="String" resultType="String">
+		SELECT U_ID FROM WEBUSER
+		WHERE U_ID=LOWER(#{VALUE})
+	</select>
+	
+	<select id="selectName" parameterType="String" resultType="String">
+		SELECT U_NICKNAME FROM WEBUSER
+		WHERE U_NICKNAME=LOWER(#{VALUE})
+	</select>
+	
+	<insert id="insertUser" parameterType="sbkim.com.vo.UserVO">
+		INSERT INTO WEBUSER(U_ID, U_NICKNAME, U_PW, U_EMAIL, U_PHONE) 
+		VALUES(LOWER(#{id}), #{name}, #{pw}, #{email}, #{hp})
+	</insert>
+	
+	<select id="selectIdForLogin" parameterType="String" resultType="String">
+		SELECT U_PW FROM WEBUSER
+		WHERE U_ID=LOWER(#{VALUE})
+	</select>
+	
+	<select id="selectBoard" resultType="sbkim.com.vo.BoardVO">
+		SELECT C_NO AS CNO, C_TITLE AS TITLE, C_CONTENTS AS CONTENTS, C_FILENAME AS FILENAME, C_VIEW AS VIEWCOUNT, C_REGDATE AS REGDATE, C_CATEGORY AS CATEGORY, C_INFOCATEGORY AS INFOCATEGORY, U_ID AS UNO FROM WEBBOARD
+		WHERE C_CATEGORY = 'public'
+		ORDER BY C_NO DESC
+	</select>
+	
+	<select id="writeContents" parameterType="sbkim.com.vo.BoardVO">
+		INSERT INTO WEBBOARD(C_NO, C_TITLE, C_CONTENTS, C_FILENAME, C_VIEW, C_REGDATE, C_CATEGORY, C_INFOCATEGORY, U_ID) 
+		VALUES(WEBBOARD_SEQ.NEXTVAL, #{title}, #{contents}, #{fileName}, #{viewCount}, SYSDATE, #{category}, #{infoCategory}, #{uno})
+	</select>
+	
+	<select id="infoBoard" parameterType="Integer" resultType="sbkim.com.vo.BoardVO">
+		SELECT C_NO AS CNO, C_TITLE AS TITLE, C_CONTENTS AS CONTENTS, C_FILENAME AS FILENAME, C_VIEW AS VIEWCOUNT, TO_CHAR(C_REGDATE, 'YYYY/MM/DD')REGDATE, C_CATEGORY AS CATEGORY, C_INFOCATEGORY AS INFOCATEGORY, U_ID AS UNO FROM WEBBOARD
+		WHERE C_NO = #{cno}
+	</select>
+	
+	<update id="plusView">
+		UPDATE WEBBOARD SET C_VIEW = C_VIEW +1 WHERE C_NO= #{VALUE}
+	</update>
+	
+	<select id="likeState" parameterType="HashMap" resultType="Integer" >
+	 	SELECT L_COUNT
+	 	FROM WEBLIKE
+	 	WHERE C_NO = #{cno} AND U_ID = #{id}
+	</select>
+	
+	<select id="likeSelect" parameterType="like" resultType="Integer" >
+		SELECT L_NO AS LNO
+		FROM WEBLIKE
+		WHERE C_NO = #{cno} AND U_ID = #{uno}
+	</select>
+	
+	<select id="likeReSelect" parameterType="like" resultType="String" >
+		SELECT L_COUNT AS LCOUNT
+		FROM WEBLIKE
+		WHERE C_NO = #{cno} AND U_ID = #{uno}
+	</select>
+	
+	<insert id="likeAdd" parameterType="like">
+		INSERT INTO WEBLIKE(L_NO, L_COUNT, C_NO, U_ID) VALUES(WEBLIKE_SEQ.NEXTVAL, #{lCount}, #{cno}, LOWER(#{uno}))
+	</insert>
+	
+	<update id="likeReAdd" parameterType="like">
+		UPDATE WEBLIKE SET L_COUNT = 1 WHERE C_NO = #{cno} AND U_ID = #{uno}
+	</update>
+	
+	<update id="likeCancle" parameterType="like">
+		UPDATE WEBLIKE SET L_COUNT = 0 WHERE C_NO = #{cno} AND U_ID = #{uno}
+	</update>
+
+</mapper>

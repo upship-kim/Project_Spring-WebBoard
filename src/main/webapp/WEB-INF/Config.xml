@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<setting name="cacheEnabled" value="false" />
+		<setting name="jdbcTypeForNull" value="NULL" />
+	</settings>
+<!-- DB설정(Connection) -->
+	<typeAliases>
+		<typeAlias type="sbkim.com.vo.UserVO" alias="user"/>
+		<typeAlias type="sbkim.com.vo.BoardVO" alias="board"/>
+		<typeAlias type="sbkim.com.vo.LikeVO" alias="like"/>
+	</typeAliases>
+	
+	
+	<mappers>
+		<mapper resource="sbkim/com/dao/board-mapper.xml" />
+	</mappers>
+</configuration>
+
+
+
+
+
+

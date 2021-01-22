@@ -1,0 +1,40 @@
+@charset "UTF-8";
+
+	.mainPage{
+		position: relative;
+		width: 100%;
+		height: 100%;
+	}	
+	
+	.loginBox{
+		position: absolute;
+		width: 24%;
+		margin-left: 38%;
+		margin-right: 38%;
+		margin-top: 14%;
+	}
+	.boxHead h4{
+		text-align: center;
+	}
+	
+	.boxBody{
+		margin: 10% 10%;
+	}
+	
+	
+	.btnGroup{
+		display: inline-table;
+	}
+	
+	.loginBtn, .joinBtn{
+		font-size: 0.8em;
+		width: 48%;
+		display: table-cell;
+	}
+	
+	.joinBtn{
+		margin-left: 2%;
+	}
+	
+	
+	

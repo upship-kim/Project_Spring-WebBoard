@@ -1,0 +1,52 @@
+@charset "UTF-8";
+
+/* 공통 css */
+	*{
+		margin: 0;	
+		list-style: none;
+	}
+	#header{
+		background: gray;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		color: white;
+		font-size: 1em;
+		position: absolute;
+		width: 100%;
+		flex: 1;
+	}
+	
+	#header a {
+		color: white;
+	}
+	
+	#logo{
+		margin-top: 0.5%;
+		margin-left: 5%;
+		margin-bottom: 0.5%; 
+	}
+	
+	#nav{
+		display: flex;
+		justify-content: flex-end;
+		margin-top: 0.5%;
+		margin-right: 5%;
+		margin-bottom: 0.5%; 
+		
+	}
+	 #nav li{
+		margin-left: 30%;
+	} 
+	
+	#subNav{
+		width: 50%;
+		display: flex;
+		justify-content: flex-end;
+		margin-top: 0.5%;
+		margin-right: 5%;
+		margin-bottom: 0.5%; 
+	}
+	
+	
+	
