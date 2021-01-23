@@ -28,14 +28,8 @@ public class SummerNoteController {
 	@Resource(name="summerNoteDao")
 	private SummerNoteDao dao;
 	
-	@RequestMapping(value="pages/summerWrite.do")
-	public String insertWrite(SummerNoteBean bean) {
-		System.out.println("여기까지오나요?");
-		dao.insertWrite(bean);
-		
-		return "pages/write";
-	}
-	@RequestMapping(value="/pages/fileUpload.do",produces="application/json; charset=utf8")
+	
+	@RequestMapping(value="fileUpload.do",produces="application/json; charset=utf8")
 		@ResponseBody
 		public String fileUpload(@RequestParam("file") MultipartFile multipartFile,HttpServletRequest request){
 		System.out.println("사진 업로드");
@@ -66,7 +60,7 @@ public class SummerNoteController {
 		System.out.println(a);
 		return a;
 	}
-	@RequestMapping(value="/pages/fileDelete.do")
+	@RequestMapping(value="fileDelete.do")
 	public String fileDelete(@RequestParam("src")String src, HttpServletRequest request) {
 		String contextRoot = new HttpServletRequestWrapper(request).getRealPath("/");
 		String fileName=contextRoot+src.substring(src.indexOf("resource"));
