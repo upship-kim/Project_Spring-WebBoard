@@ -19,7 +19,7 @@
 				function() {
 					if ($("textarea[name='contents']").val() == ""
 							|| $("input#title").val() == "") {
-						alert("제목이나 내용을 채워주세요");
+						alert("제목 또는 내용을 채워주세요");
 						return false;
 					} else {
 						$("form#bbs").submit();
