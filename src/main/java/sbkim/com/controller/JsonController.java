@@ -1,19 +1,14 @@
 package sbkim.com.controller;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.ibatis.annotations.UpdateProvider;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
 import sbkim.com.dao.BoardDao;
-import sbkim.com.vo.BoardVO;
 import sbkim.com.vo.LikeVO;
 
 @RestController
@@ -90,6 +85,5 @@ public class JsonController {
 		return "success";
 		
 	}
-	
 
 }

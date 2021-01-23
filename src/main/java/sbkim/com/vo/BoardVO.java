@@ -17,7 +17,7 @@ public class BoardVO {
 	public BoardVO() {
 		super();
 	}
-
+	
 
 	public BoardVO(int cno, String title, String contents, String fileName, int viewCount, String regdate,
 			String category, String infoCategory, String uno, int lCount) {

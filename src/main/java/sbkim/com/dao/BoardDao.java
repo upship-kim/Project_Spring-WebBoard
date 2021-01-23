@@ -138,16 +138,6 @@ public class BoardDao extends SqlSessionDaoSupport {
 		
 	}
 	
-	/*//like - 게시물 당 전체 좋아요 수 출력 
-	public void selectLikeCount(List<BoardVO>totalList) {
-		System.out.println("dao cnoList: "+totalList);
-		List<Integer>cnoList; 
-		for(int i=0; i<totalList.size(); i++) {
-			cnoList = totalList.get(i).getCno());
-		}
-		
-		//return this.getSqlSession().selectOne("selectLikeCount", cno);
-	}*/
 
 	
 }

@@ -1,19 +1,17 @@
 package sbkim.com.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.io.File;
+import java.io.FileOutputStream;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
-import oracle.jdbc.util.Login;
 import sbkim.com.dao.BoardDao;
 import sbkim.com.vo.BoardVO;
 import sbkim.com.vo.UserVO;
@@ -79,9 +77,33 @@ public class BoardController {
 	}
 	
 	//summerWrite - 글쓰기
-	@RequestMapping(value="summerWrite.do")
-	public String writeContents(BoardVO vo) {
+	@RequestMapping(value="boardWrite.do")
+	public String writeContents(BoardVO vo, @RequestParam(value="file")MultipartFile file) {
+		/*requestParam 으로 받는 file 은 input의 file 명과 다르게 해야한다! (MultipartFile 객체를 받기 위한 이름이기때문) */
+		String loc="C:\\Sangbae\\6.Project\\TeamProject\\board\\src\\main\\webapp\\resources\\fileupload\\";
+		FileOutputStream fos = null; 
+		String originFileName = file.getOriginalFilename();
+		
+		if(originFileName.length()>0) {
+			try {
+				fos = new FileOutputStream(new File(loc+originFileName));
+				fos.write(file.getBytes());
+				vo.setFileName(originFileName);
+			} catch (Exception e) {
+				// TODO: handle exception
+			} finally {
+				try {
+					fos.close();
+				} catch (Exception e2) {
+					// TODO: handle exception
+				}
+			}
+		}
+		
 		System.out.println("form:"+vo);
+		System.out.println("fileName:"+originFileName);
+		System.out.println("fileSize:"+file.getSize());
+		System.out.println("fileContentsType:"+file.getContentType());
 		dao.writeContents(vo);
 		return "view/contents/main";
 	}
