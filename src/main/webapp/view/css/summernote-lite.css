@@ -206,9 +206,9 @@
 	content: ""
 }
 
-.note-icon-picture::before {
+/* .note-icon-picture::before {
 	content: ""
-}
+} */
 
 .note-icon-question::before {
 	content: ""

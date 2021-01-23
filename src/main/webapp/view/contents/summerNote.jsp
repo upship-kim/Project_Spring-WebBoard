@@ -9,9 +9,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<link rel="stylesheet"	href="../css/summernote-lite.css">
+<link rel="stylesheet"	href="/board/view/css/summernote-lite.css">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="summerNote/summernote-lite.js"></script>
 <script src="summerNote/lang/summernote-ko-KR.js"></script>
 <script type="text/javascript">
@@ -32,12 +31,13 @@
 		$.ajax({
 			data : data,
 			type : "post",
-			url : 'fileUpload.do',
+			url : '/board/fileUpload.do',
 			enctype : 'multipart/form-data',
 			processData : false,
 			contentType : false,
 			success : function(data) {
 				$(el).summernote('editor.insertImage', data.url);
+				$("#fileName").val(data.savedFileName);
 			}
 
 		});
@@ -47,7 +47,7 @@
 		$.ajax({
 			data : {"src":src},
 			type : "post",
-			url : 'fileDelete.do',
+			url : '/board/fileDelete.do',
 			cache : false,
 			success : function(data) {
 				alert("성공");
@@ -60,7 +60,7 @@
 </head>
 <body>
 
-	<form id="bbs" method="post" action="/board/summerWrite.do">
+	<form id="bbs" method="post" action="/board/summerWrite.do" enctype="multipart/form-data">
 			<input type="hidden" name="uno" value="${id }">
 		<div>
 			<label>게시판</label>
@@ -73,8 +73,9 @@
 			<input type="radio" name="infoCategory" value="리빙">리빙
 			<input type="radio" name="infoCategory" value="기타">기타
 		</div>
-		<input type="text" id="title" name="title" maxlength="10%" size="100%" placeholder="제목">
+		<input type="text" id="title" name="title" maxlength="100" size="100%" placeholder="제목">
 		<textarea id="summernote" name="contents"></textarea>
+		<input type="hidden" id="file" name=fileName>
 	</form>
 	<input type="button" class="btn btn-default" name="cancle" id="cancle" value="취소"
 		style="float: right">
