@@ -247,7 +247,7 @@ external_root_jQuery_commonjs2_jquery_commonjs_jquery_amd_jquery_default.a.exten
       sizeunit: 'Font Size Unit'
     },
     image: {
-      image: 'Picture',
+     /* image: 'Picture',*/
       insert: 'Insert Image',
       resizeFull: 'Resize full',
       resizeHalf: 'Resize half',
@@ -271,9 +271,9 @@ external_root_jQuery_commonjs2_jquery_commonjs_jquery_amd_jquery_default.a.exten
     },
     video: {
       video: 'Video',
-      videoLink: 'Video Link',
+      videoLink: 'Video Link'+'<br>',
       insert: 'Insert Video',
-      url: 'Video URL',
+      url: 'Video URL'+'<br>',
       providers: '(YouTube, Vimeo, Vine, Instagram, DailyMotion or Youku)'
     },
     link: {
@@ -7785,13 +7785,13 @@ var Buttons_Buttons = /*#__PURE__*/function () {
           click: _this2.context.createInvokeHandler('linkDialog.show')
         }).render();
       });
-      this.context.memo('button.picture', function () {
+     /* this.context.memo('button.picture', function () {
         return _this2.button({
           contents: _this2.ui.icon(_this2.options.icons.picture),
           tooltip: _this2.lang.image.image,
           click: _this2.context.createInvokeHandler('imageDialog.show')
         }).render();
-      });
+      });*/
       this.context.memo('button.video', function () {
         return _this2.button({
           contents: _this2.ui.icon(_this2.options.icons.video),
@@ -9784,14 +9784,14 @@ external_root_jQuery_commonjs2_jquery_commonjs_jquery_amd_jquery_default.a.summe
     otherStaticBar: '',
     // toolbar
     codeviewKeepButton: false,
-    toolbar: [['style', ['style']], ['font', ['bold', 'underline', 'clear']], ['fontname', ['fontname']], ['color', ['color']], ['para', ['ul', 'ol', 'paragraph']], ['table', ['table']], ['insert', ['link', 'picture', 'video']], ['view', ['fullscreen', 'codeview', 'help']]],
+    toolbar: [['style', ['style']], ['font', ['bold', 'underline', 'clear']], ['fontname', ['fontname']], ['color', ['color']], ['para', ['ul', 'ol', 'paragraph']], ['table', ['table']], ['insert', ['link', 'video']], ['view', ['fullscreen', 'codeview', 'help']]],
     // popover
     popatmouse: true,
     popover: {
-      image: [['resize', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']], ['float', ['floatLeft', 'floatRight', 'floatNone']], ['remove', ['removeMedia']]],
+      //image: [['resize', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']], ['float', ['floatLeft', 'floatRight', 'floatNone']], ['remove', ['removeMedia']]],
       link: [['link', ['linkDialogShow', 'unlink']]],
       table: [['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']], ['delete', ['deleteRow', 'deleteCol', 'deleteTable']]],
-      air: [['color', ['color']], ['font', ['bold', 'underline', 'clear']], ['para', ['ul', 'paragraph']], ['table', ['table']], ['insert', ['link', 'picture']], ['view', ['fullscreen', 'codeview']]]
+     // air: [['color', ['color']], ['font', ['bold', 'underline', 'clear']], ['para', ['ul', 'paragraph']], ['table', ['table']], ['insert', ['link', 'picture']], ['view', ['fullscreen', 'codeview']]]
     },
     // air mode: inline editor
     airMode: false,
@@ -9974,7 +9974,7 @@ external_root_jQuery_commonjs2_jquery_commonjs_jquery_amd_jquery_default.a.summe
       'minus': 'note-icon-minus',
       'orderedlist': 'note-icon-orderedlist',
       'pencil': 'note-icon-pencil',
-      'picture': 'note-icon-picture',
+    /*  'picture': 'note-icon-picture',*/
       'question': 'note-icon-question',
       'redo': 'note-icon-redo',
       'rollback': 'note-icon-rollback',
