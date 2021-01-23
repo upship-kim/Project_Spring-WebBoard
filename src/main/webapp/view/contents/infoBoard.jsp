@@ -152,7 +152,9 @@
 				</div>
 				<div class="panel panel-body infoBody">
 					<div class="pannel contentsPart">
+						<img alt="" src="/board/resources/fileupload/${info.fileName}" width="20%">
 						${info.contents}
+						
 					</div>
 				</div>
 				<div class="filePart">
