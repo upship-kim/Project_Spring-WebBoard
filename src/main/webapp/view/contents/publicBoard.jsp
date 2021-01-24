@@ -51,7 +51,7 @@
 		<span><button id="create" class="btn btn-default">글쓰기</button></span>
 		<br>
 		<div class="option">
-		<%-- ${list} --%>
+		<%-- ${list}  --%>
 			<div class="sortOption">
 				<div class="sort">
 					<span><a href="/board/select.do?sort=cno">최신순</a></span>
