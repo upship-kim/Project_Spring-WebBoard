@@ -130,7 +130,7 @@
 		<h3>${info.infoCategory}</h3>  
 		<br>
 		${info }<br>
-		${id }
+		<%-- ${id } --%>
 		<div class="infoBtns">
 			<span><button id="list" class="btn btn-default listBtn">목록</button></span>
 			<span><button id="mod" class="btn btn-default modBtn">수정</button></span>
@@ -146,7 +146,7 @@
 					</div>
 					<div class="infoSecondWrap">
 						<div>조회수: <span id="view">${info.viewCount}</span></div>
-						<div>좋아요: <span id="like">1</span></div>	<!-- 전체 좋아요 수  -->
+						<div>좋아요: <span id="like">${info.lCount }</span></div>	<!-- 전체 좋아요 수  -->
 						<div>등록일: <span id="regdate">${info.regdate }</span></div>
 					</div>
 				</div>
