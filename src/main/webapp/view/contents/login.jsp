@@ -27,7 +27,10 @@
 				$("form").submit();		
 			}
 		});
-		
+		$("#saveId").click(function(){
+			$("#saveId").val($("#id").val());
+			alert($("#saveId").val());
+		});
 	});
 
 </script>
@@ -48,12 +51,22 @@
 						<p style="text-align: center; color: red;">ID & PW를 확인해주세요</p>  					
   					</c:when>
   				</c:choose>
+  				<% 
+    						String cookie =null;
+    						Cookie[] cook = request.getCookies(); 
+    							for(int i=0; i<cook.length; i++){
+    								 if(cook[i].getName().trim().equals("id")){
+    									cookie=cook[i].getValue();
+    								} 
+    							}
+    						
+    						%>
   				<div class="panel boxBody">
   					<form class="form-horizontal" action="/board/login.do" method="post">
   						<div class="form-group">
   							<label class="control-label col-sm-3 nameLabel" for="id">ID</label>
     						<div class="col-sm-9">
-    						<input type="id" class="form-control" id="id" name="id" placeholder="Enter id">
+    						<input type="id" class="form-control" id="id" name="id" placeholder="Enter id" value="<%=cookie==null?"":cookie%>">
    							</div>
   						</div>
   						<div class="form-group">
@@ -64,8 +77,12 @@
   						</div>
   						<div class="form-group">
     						<div class="col-sm-offset-3 col-sm-9">	<!-- offset: 빈칸 -->
+    						
+    						
+    						
      							<div class="checkbox">
-      							<label><input type="checkbox">Remember me</label>
+      							<label><input type="checkbox" id="saveId" name="saveId" <%= cookie!=null?"checked":"" %>
+      							 >Remember me</label>
      							</div>
   							</div>
 						</div>
