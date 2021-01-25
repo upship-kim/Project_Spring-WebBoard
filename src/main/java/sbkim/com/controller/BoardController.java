@@ -4,12 +4,18 @@ import java.io.File;
 import java.io.FileOutputStream;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.web.multipart.MultipartFile;
 
 import sbkim.com.dao.BoardDao;
@@ -43,13 +49,28 @@ public class BoardController {
 	
 	//로그인
 	@RequestMapping(value="login.do")
-	public String login(String id, String pw, Model model, HttpSession session) {
-		System.out.println(dao.selectIdForLogin(id, pw));
+	public String login(String id, String pw, String saveId, Model model, HttpSession session, 
+			HttpServletRequest rq, HttpServletResponse rs) {
+		//rq.setAttribute(id, id);
+		//System.out.println(dao.selectIdForLogin(id, pw));
+		//System.out.println("아이디저장"+saveId);
 		if(dao.selectIdForLogin(id, pw)) {
+			Cookie cookie = new Cookie("id", id);
 			session.setAttribute("id", id);
 			session.setMaxInactiveInterval(60*60);
+			if(saveId!=null) {
+				rq.getAttribute("id");
+				cookie.setValue(id);
+				cookie.setMaxAge(30);
+				rs.addCookie(cookie);
+				System.out.println("cookie name: "+cookie.getName());
+				System.out.println("cookie value: "+cookie.getValue());
+				
+			}else {
+				cookie.setMaxAge(0);
+				rs.addCookie(cookie);
+			}
 			model.addAttribute("id", session.getAttribute("id"));
-			
 			return "view/contents/main";
 		}else {
 			model.addAttribute("state", "fail");
