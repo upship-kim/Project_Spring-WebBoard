@@ -37,7 +37,7 @@
 		$("#mod").click(function(){
 			var url="/board/contentsModify.do?cno=${info.cno}";
 			var name="수정하기";
-			var option="width=600px, height=800px, top=100px, left=650px, location=no, scrollbars=yes, status=no";
+			var option="width=600px, height=600px, top=100px, left=650px, location=no, scrollbars=yes, status=no";
 			window.open(url, name, option);
 			//location.href="/board/contentsModify.do?cno=${info.cno}"
 		})

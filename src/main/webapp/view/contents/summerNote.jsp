@@ -21,7 +21,7 @@
 				alert("제목 또는 내용을 채워주세요");
 				return false;
 			} else {
-				$("form#bbs").submit();
+				$("form#new").submit();
 			}
 		});
 		
@@ -31,21 +31,21 @@
 				alert("제목 또는 내용을 채워주세요");
 				return false;
 			} else {
-				$("form#bbs").submit();
-				window.close();
+				$("form#mod").submit();
+				//window.close();
 			}
 		});
 		
-		$("#fileDel").click(function(){
+		 $("#fileDel").click(function(){
 			alert('aa');
 			$("#originFile").html('');
 			$("input[name='fileName']").val('');
 		}); 
-		
-		$("input[type='file']").change(function(){
+		 
+		 $("input[type='file']").change(function(){
 			$("#originFile").html('');
 			$("input[name='fileName']").val('');
-		})
+		}) 
 	});
 </script>
 
@@ -55,7 +55,7 @@
 <!-- 글쓰기  -->
 <c:choose>
 <c:when test="${modify eq null }">
-<form id="bbs" method="post" action="/board/boardWrite.do" enctype="multipart/form-data">
+<form id="new" method="post" action="/board/boardWrite.do" enctype="multipart/form-data">
 			<input type="hidden" name="uno" value="${id}">
 		<div>
 			<label>게시판 선택</label>&nbsp;&nbsp; | &nbsp;&nbsp;
@@ -97,16 +97,14 @@
 		});
 	</script>
 </c:when>
+
 <c:otherwise>
 <!-- 게시물 수정하기  -->
 	<h3>게시물 수정하기</h3>
 	${modify }
 	<hr>
-	<div class="page">
-	<form id="bbs" method="post" action="/board/boardWrite.do" enctype="multipart/form-data">
+	<form id="mod" method="post" action="/board/boardUpdate.do" enctype="multipart/form-data">
 			<input type="hidden" name="cno" value="${modify.cno}">
-			<input type="hidden" name="viewCount" value="${modify.viewCount}">
-			<input type="hidden" name="lCount" value="${modify.lCount}">
 			<input type="hidden" name="uno" value="${modify.uno}">
 		<div>
 			<label>게시판 선택</label>&nbsp;&nbsp; | &nbsp;&nbsp;
@@ -175,7 +173,6 @@
 			});
 		});
 	</script>
-	</div>
 </c:otherwise>
 </c:choose>
 </body>

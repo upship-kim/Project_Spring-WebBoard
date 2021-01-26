@@ -121,11 +121,38 @@ public class BoardController {
 		System.out.println("filelength:"+originFileName.length());
 		System.out.println("fileSize:"+file.getSize());
 		System.out.println("fileContentsType:"+file.getContentType());
-		if(vo.getCno()>0) {
-			dao.modifyInfo(vo);
-		}else if(vo.getCno()==0){
 			dao.writeContents(vo);
+		return "view/contents/main";
+	}
+	
+	//summerWrite - 수정
+	@RequestMapping(value="boardUpdate.do")
+	public String updateContents(BoardVO vo, @RequestParam(value="file", defaultValue="null")MultipartFile file) {
+		String loc="C:\\Sangbae\\6.Project\\TeamProject\\board\\src\\main\\webapp\\resources\\fileupload\\";
+		FileOutputStream fos = null; 
+		String fileName = file.getOriginalFilename();
+		System.out.println("file 제목: "+fileName);
+		if(fileName.length()>0) {
+			try {
+				fos = new FileOutputStream(new File(loc+fileName));
+				fos.write(file.getBytes());
+				vo.setFileName(fileName);
+			} catch (Exception e) {
+				// TODO: handle exception
+			} finally {
+				try {
+					fos.close();
+				} catch (Exception e2) {
+					// TODO: handle exception
+				}
+			}
 		}
+		System.out.println("form:"+vo);
+		System.out.println("fileName:"+fileName);
+		System.out.println("filelength:"+fileName.length());
+		System.out.println("fileSize:"+file.getSize());
+		System.out.println("fileContentsType:"+file.getContentType());
+		dao.modifyInfo(vo);
 		return "view/contents/main";
 	}
 	

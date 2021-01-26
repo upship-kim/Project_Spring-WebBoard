@@ -52,11 +52,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="modifyInfo" parameterType="sbkim.com.vo.BoardVO">
 		UPDATE WEBBOARD SET C_TITLE=#{title}, C_CONTENTS=#{contents}, C_CATEGORY = #{category}, C_INFOCATEGORY = #{infoCategory}
 		<choose>
-			<when test="fileName == null">
-			</when>
-			<otherwise>
+			<when test="fileName != null">
 			, C_FILENAME = #{fileName}
-			</otherwise>
+			</when>
 		</choose>
 		WHERE C_NO = #{cno}
 	</update>
