@@ -25,6 +25,7 @@
 			}
 		});
 		
+		
 		/* 수정하기 */
 		$("input#mod").click(function() {
 			if ($("textarea[name='contents']").val() == ""|| $("input#title").val() == "") {
@@ -32,9 +33,11 @@
 				return false;
 			} else {
 				$("form#mod").submit();
-				//window.close();
+				opener.location.reload();
+				window.close();
 			}
 		});
+		
 		
 		 $("#fileDel").click(function(){
 			alert('aa');
