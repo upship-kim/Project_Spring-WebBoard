@@ -44,10 +44,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   		</choose>
 	</select>
 	
-	<select id="writeContents" parameterType="sbkim.com.vo.BoardVO">
+	<insert id="writeContents" parameterType="sbkim.com.vo.BoardVO">
 		INSERT INTO WEBBOARD(C_NO, C_TITLE, C_CONTENTS, C_FILENAME, C_VIEW, C_REGDATE, C_CATEGORY, C_INFOCATEGORY, U_ID) 
 		VALUES(WEBBOARD_SEQ.NEXTVAL, #{title}, #{contents}, #{fileName}, #{viewCount}, SYSDATE, #{category}, #{infoCategory}, #{uno})
-	</select>
+	</insert>
+	
+	<update id="modifyInfo" parameterType="sbkim.com.vo.BoardVO">
+		UPDATE WEBBOARD SET C_TITLE=#{title}, C_CONTENTS=#{contents}, C_CATEGORY = #{category}, C_INFOCATEGORY = #{infoCategory}
+		<choose>
+			<when test="fileName != null">
+			, C_FILENAME = #{fileName}
+			</when>
+		</choose>
+		WHERE C_NO = #{cno}
+	</update>
+	
 	
 	<select id="infoBoard" parameterType="Integer" resultType="sbkim.com.vo.BoardVO">
 		SELECT A.C_NO AS CNO, A.C_TITLE AS TITLE, A.C_CONTENTS AS CONTENTS, A.C_FILENAME AS FILENAME, A.C_VIEW AS VIEWCOUNT, TO_CHAR(A.C_REGDATE, 'YYYY/MM/DD HH24:MI')REGDATE, 

@@ -71,7 +71,13 @@ public class BoardDao extends SqlSessionDaoSupport {
 	
 	//board - write
 	public void writeContents(BoardVO vo) {
-		this.getSqlSession().insert("writeContents", vo);
+			this.getSqlSession().insert("writeContents", vo);
+	}
+	
+	//board - modify
+	public void modifyInfo(BoardVO vo) {
+		System.out.println("dao update: "+vo);
+			this.getSqlSession().update("modifyInfo", vo);
 	}
 	
 	//infoBoard - read
@@ -79,6 +85,7 @@ public class BoardDao extends SqlSessionDaoSupport {
 		System.out.println("dao: "+cno);
 		return this.getSqlSession().selectOne("infoBoard", cno);
 	}
+	
 	
 	//plus viewCount 
 	public void plusView(int cno) {

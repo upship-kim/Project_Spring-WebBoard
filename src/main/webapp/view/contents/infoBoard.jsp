@@ -27,13 +27,21 @@
 			cancleBtn +='<button type="button" class="btn btn default" value="like" style="background: #9292f5; color: white">';
 			cancleBtn +='<img alt="" src="/board/view/img/like.png">좋아요</button></div>';
 		
-	
-			
 			
 		//목록	
 		$("button#list").click(function(){
 			location.href="/board/view/contents/main.jsp";
 		})
+		
+		//수정
+		$("#mod").click(function(){
+			var url="/board/contentsModify.do?cno=${info.cno}";
+			var name="수정하기";
+			var option="width=600px, height=600px, top=100px, left=650px, location=no, scrollbars=yes, status=no";
+			window.open(url, name, option);
+			//location.href="/board/contentsModify.do?cno=${info.cno}"
+		})
+		
 		
 		
 		//좋아요

@@ -50,7 +50,7 @@ public class BoardController {
 	//로그인
 	@RequestMapping(value="login.do")
 	public String login(String id, String pw, String saveId, Model model, HttpSession session, 
-			HttpServletRequest rq, HttpServletResponse rs) {
+						HttpServletRequest rq, HttpServletResponse rs) {
 		//rq.setAttribute(id, id);
 		//System.out.println(dao.selectIdForLogin(id, pw));
 		//System.out.println("아이디저장"+saveId);
@@ -59,9 +59,8 @@ public class BoardController {
 			session.setAttribute("id", id);
 			session.setMaxInactiveInterval(60*60);
 			if(saveId!=null) {
-				rq.getAttribute("id");
 				cookie.setValue(id);
-				cookie.setMaxAge(30);
+				cookie.setMaxAge(60*60);	//1시간 동안 저장 
 				rs.addCookie(cookie);
 				System.out.println("cookie name: "+cookie.getName());
 				System.out.println("cookie value: "+cookie.getValue());
@@ -91,9 +90,6 @@ public class BoardController {
 	public String selectBoard(Model model, @RequestParam(value="sort")String sort) {
 		System.out.println(dao.selectBoard(sort));
 		model.addAttribute("list", dao.selectBoard(sort));		//게시판 목록 출력
-		//List<BoardVO>cnoList ; 								//for like Count Param
-		//cnoList=dao.selectBoard();
-		//dao.selectLikeCount(cnoList);		//조회수 출력
 		return "view/contents/publicBoard";
 	}
 	
@@ -104,7 +100,7 @@ public class BoardController {
 		String loc="C:\\Sangbae\\6.Project\\TeamProject\\board\\src\\main\\webapp\\resources\\fileupload\\";
 		FileOutputStream fos = null; 
 		String originFileName = file.getOriginalFilename();
-		
+		System.out.println("file 제목: "+file.getOriginalFilename());
 		if(originFileName.length()>0) {
 			try {
 				fos = new FileOutputStream(new File(loc+originFileName));
@@ -120,13 +116,51 @@ public class BoardController {
 				}
 			}
 		}
-		
 		System.out.println("form:"+vo);
 		System.out.println("fileName:"+originFileName);
+		System.out.println("filelength:"+originFileName.length());
 		System.out.println("fileSize:"+file.getSize());
 		System.out.println("fileContentsType:"+file.getContentType());
-		dao.writeContents(vo);
+			dao.writeContents(vo);
 		return "view/contents/main";
+	}
+	
+	//summerWrite - 수정
+	@RequestMapping(value="boardUpdate.do")
+	public String updateContents(BoardVO vo, @RequestParam(value="file", defaultValue="null")MultipartFile file) {
+		String loc="C:\\Sangbae\\6.Project\\TeamProject\\board\\src\\main\\webapp\\resources\\fileupload\\";
+		FileOutputStream fos = null; 
+		String fileName = file.getOriginalFilename();
+		System.out.println("file 제목: "+fileName);
+		if(fileName.length()>0) {
+			try {
+				fos = new FileOutputStream(new File(loc+fileName));
+				fos.write(file.getBytes());
+				vo.setFileName(fileName);
+			} catch (Exception e) {
+				// TODO: handle exception
+			} finally {
+				try {
+					fos.close();
+				} catch (Exception e2) {
+					// TODO: handle exception
+				}
+			}
+		}
+		System.out.println("form:"+vo);
+		System.out.println("fileName:"+fileName);
+		System.out.println("filelength:"+fileName.length());
+		System.out.println("fileSize:"+file.getSize());
+		System.out.println("fileContentsType:"+file.getContentType());
+		dao.modifyInfo(vo);
+		return "view/contents/main";
+	}
+	
+	//contentsModify - 게시물 수정 
+	@RequestMapping(value="contentsModify.do")
+	public String infoModify(@RequestParam(value="cno", required=false)int cno, Model model) {
+			model.addAttribute("modify", dao.infoBoard(cno));
+		return "view/contents/summerNote"; 
 	}
 	
 	//infoBoard - 게시물 확인 & 조회수 증가 
@@ -139,4 +173,6 @@ public class BoardController {
 		model.addAttribute("info", dao.infoBoard(cno));
 		return "view/contents/infoBoard";
 	}
+	
+	
 }
