@@ -69,6 +69,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE A.C_NO = #{cno}
 	</select>
 	
+
 	<!-- WEBBOARD 테이블 내 삭제  -->
 	<delete id="boardDel" parameterType="Integer" >
 		DELETE FROM WEBBOARD WHERE C_NO = #{VALUE}

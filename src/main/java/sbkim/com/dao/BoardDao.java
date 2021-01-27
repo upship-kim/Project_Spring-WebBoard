@@ -85,6 +85,7 @@ public class BoardDao extends SqlSessionDaoSupport {
 		System.out.println("dao: "+cno);
 		return this.getSqlSession().selectOne("infoBoard", cno);
 	}
+
 	
 	//infoBoard - delete
 	public void infoDelete(int cno) {
