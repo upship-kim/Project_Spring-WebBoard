@@ -46,9 +46,11 @@
 	</nav>
 	<div class="page">
 		<h3>Public Board</h3>
-		<%=session.getAttribute("id") %>
+		${ id }
 		<br>
+		<c:if test="${id != null}">
 		<span><button id="create" class="btn btn-default">글쓰기</button></span>
+		</c:if>
 		<br>
 		<div class="option">
 		<%-- ${list}  --%>
