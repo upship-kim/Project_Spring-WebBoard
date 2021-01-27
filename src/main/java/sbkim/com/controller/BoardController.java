@@ -163,6 +163,13 @@ public class BoardController {
 		return "view/contents/summerNote"; 
 	}
 	
+	//contentsDelete - 게시물 삭제 
+	@RequestMapping(value="contentsDelete.do")
+	public String infoDelete(@RequestParam(value="cno", required=false)int cno) {
+		dao.infoDelete(cno);
+		return "view/contents/main";
+	}
+	
 	//infoBoard - 게시물 확인 & 조회수 증가 
 	@RequestMapping(value="infoBoard.do")
 	public String infoBoard(@RequestParam(value="cno", required=false) int cno, Model model, HttpSession session) {

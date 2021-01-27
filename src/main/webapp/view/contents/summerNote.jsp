@@ -103,8 +103,9 @@
 
 <c:otherwise>
 <!-- 게시물 수정하기  -->
+	<div style="padding: 2%;">
 	<h3>게시물 수정하기</h3>
-	${modify }
+	<%-- ${modify } --%>
 	<hr>
 	<form id="mod" method="post" action="/board/boardUpdate.do" enctype="multipart/form-data">
 			<input type="hidden" name="cno" value="${modify.cno}">
@@ -161,13 +162,14 @@
 		style="float: right">
 	<input type="submit" class="btn btn-primary" name="mod" id="mod" value="수정"
 		style="float: right">
+	</div>
 	<script>
 		$('document').ready(function() {
 			//여기 아래 부분
 			$('#summernote').summernote({
-				height : 300, // 에디터 높이
-				minHeight : 300, // 최소 높이
-				maxHeight : 500, // 최대 높이
+				height : 200, // 에디터 높이
+				minHeight : 200, // 최소 높이
+				maxHeight : 400, // 최대 높이
 				focus : true, // 에디터 로딩후 포커스를 맞출지 여부
 				lang : "ko-KR", // 한글 설정
 				placeholder : '최대 2048자까지 쓸 수 있습니다', //placeholder 설정

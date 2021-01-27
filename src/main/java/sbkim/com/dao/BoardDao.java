@@ -86,6 +86,13 @@ public class BoardDao extends SqlSessionDaoSupport {
 		return this.getSqlSession().selectOne("infoBoard", cno);
 	}
 	
+	//infoBoard - delete
+	public void infoDelete(int cno) {
+		System.out.println("dao del: "+cno);
+		this.getSqlSession().delete("likeDel", cno);
+		this.getSqlSession().delete("boardDel", cno);
+	}
+	
 	
 	//plus viewCount 
 	public void plusView(int cno) {
