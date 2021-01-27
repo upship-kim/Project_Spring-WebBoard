@@ -37,18 +37,10 @@
 		$("#mod").click(function(){
 			var url="/board/contentsModify.do?cno=${info.cno}";
 			var name="수정하기";
-			var option="width=700px, height=600px, top=100px, left=650px, location=no, scrollbars=yes, status=no";
+			var option="width=600px, height=600px, top=100px, left=650px, location=no, scrollbars=yes, status=no";
 			window.open(url, name, option);
 			//location.href="/board/contentsModify.do?cno=${info.cno}"
 		})
-		
-		$("#del").click(function(){
-			var question = confirm("게시물을 삭제하시겠습니까?");
-			if(question){
-				location.href="/board/contentsDelete.do?cno=${info.cno}";
-			}
-		})
-		
 		
 		
 		
@@ -145,15 +137,12 @@
 	<div class="page">
 		<h3>${info.infoCategory}</h3>  
 		<br>
-		<%-- ${info }<br> --%>
+		${info }<br>
 		<%-- ${id } --%>
 		<div class="infoBtns">
 			<span><button id="list" class="btn btn-default listBtn">목록</button></span>
-			<c:set var="uno" value="${ info.uno }"/>
-			<c:if test="${id == uno }">
 			<span><button id="mod" class="btn btn-default modBtn">수정</button></span>
 			<span><button id="del" class="btn btn-default delBtn">삭제</button></span>
-			</c:if>
 		</div>
 		<hr>
 		<div class="board">
