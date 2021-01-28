@@ -86,6 +86,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		DELETE FROM WEBLIKE WHERE C_NO = #{VALUE}
 	</delete>
 	
+	
 	<update id="plusView">
 		UPDATE WEBBOARD SET C_VIEW = C_VIEW +1 WHERE C_NO= #{VALUE}
 	</update>
