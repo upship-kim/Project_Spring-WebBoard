@@ -16,6 +16,7 @@
 <script type="text/javascript">
 	$(function() {
 		/* 글쓰기 */
+		
 		$("input#save").click(function() {
 			if ($("textarea[name='contents']").val() == ""|| $("input#title").val() == "") {
 				alert("제목 또는 내용을 채워주세요");
@@ -28,28 +29,26 @@
 		
 		/* 수정하기 */
 		$("input#mod").click(function() {
+			//alert("a");
 			if ($("textarea[name='contents']").val() == ""|| $("input#title").val() == "") {
 				alert("제목 또는 내용을 채워주세요");
 				return false;
 			} else {
-				$("form#mod").submit();
-				opener.location.reload();
-				window.close();
+				$("form").submit();
 			}
 		});
 		
 		
+		/* 업로드된 파일 삭제 */
 		 $("#fileDel").click(function(){
 			alert('aa');
-			$("#originFile").html('');
+			$("#originFile label").html('');
 			$("input[name='fileName']").val('');
 		}); 
 		 
-		 $("input[type='file']").change(function(){
-			$("#originFile").html('');
-			$("input[name='fileName']").val('');
-		}) 
-	});
+			
+		
+	})
 </script>
 
 
@@ -59,15 +58,15 @@
 <c:choose>
 <c:when test="${modify eq null }">
 <form id="new" method="post" action="/board/boardWrite.do" enctype="multipart/form-data">
-			<input type="hidden" name="uno" value="${id}">
+			<input type="text" name="uno" value="${id}">
 		<div>
 			<label>게시판 선택</label>&nbsp;&nbsp; | &nbsp;&nbsp;
-			<label class="radio-inline"><input type="radio" name="category" value="public">Public Board</label>
+			<label class="radio-inline"><input type="radio" name="category" value="public" checked>Public Board</label>
 			<label class="radio-inline"><input type="radio" name="category" value="private">Private Board</label>
 		</div>
 		<div>
 			<label>세부 카테고리</label>&nbsp;&nbsp; | &nbsp;&nbsp;
-			<label class="radio-inline"><input type="radio" name="infoCategory" value="테크">테크</label>
+			<label class="radio-inline"><input type="radio" name="infoCategory" value="테크" checked>테크</label>
 			<label class="radio-inline"><input type="radio" name="infoCategory" value="리빙">리빙</label>
 			<label class="radio-inline"><input type="radio" name="infoCategory" value="기타">기타</label>
 		</div>
@@ -105,9 +104,9 @@
 <!-- 게시물 수정하기  -->
 	<div style="padding: 2%;">
 	<h3>게시물 수정하기</h3>
-	<%-- ${modify } --%>
+	${modify }
 	<hr>
-	<form id="mod" method="post" action="/board/boardUpdate.do" enctype="multipart/form-data">
+	<form id="mod" method="post" action="/board/modifyContents.do" enctype="multipart/form-data">
 			<input type="hidden" name="cno" value="${modify.cno}">
 			<input type="hidden" name="uno" value="${modify.uno}">
 		<div>
@@ -145,19 +144,30 @@
 		</div>
 		<input type="text" id="title" name="title" maxlength="100" size="100%" placeholder="제목" value="${modify.title }">
 		<textarea id="summernote" name="contents">${modify.contents }</textarea>
-		<div class="panel panel-default">
- 			 <div class="panel-body">
-				<input type="file" name="file">
-				<c:if test="${modify.fileName != null }">
-				<p id="originFile">기존 파일:<label> ${modify.fileName }</label>
-				&nbsp;&nbsp;	
-				<label id="fileDel" style="color: red; font-size: 1rem; cursor: pointer;">삭제하기</label></p>
-				<input type="hidden" name="fileName" value="${modify.fileName }">
-				</c:if>
- 			 </div>
-		</div>
-	</form>
 	
+	
+ 			 <div class="panel-body file">
+ 			 <c:choose>
+				<c:when test="${modify.fileName != null }">
+				<p id="originFile">업로드된 파일:<label> ${modify.fileName}</label>
+				<label id="fileDel" style="color: red; font-size: 1rem; cursor: pointer;">삭제하기</label></p>
+				<hr>
+				<p><small>※파일을 변경하시려면 아래 파일을 선택해주세요.</small></p>
+				<input type="file" name="file">
+				<input type="hidden" name="fileName" value="${modify.fileName }">
+				<%-- <button type="button" class="btn btn-default" id="addFile" value="${modify.cno}">파일 변경</button> --%>
+				&nbsp;&nbsp;
+				</c:when>
+				<c:otherwise>
+				<p id="originFile">업로드된 파일:<label>파일 없음</label>
+				<input type="file" name="file">
+				<input type="hidden" name="fileName" value="${modify.fileName }">
+				<hr>
+				<%-- <button type="button" class="btn btn-default" id="addFile" value="${modify.cno}">파일 추가</button> --%>
+				</c:otherwise>
+			</c:choose>
+ 			 </div>
+	</form>
 	<input type="button" class="btn btn-default" name="cancle" id="cancle" value="취소"
 		style="float: right">
 	<input type="submit" class="btn btn-primary" name="mod" id="mod" value="수정"

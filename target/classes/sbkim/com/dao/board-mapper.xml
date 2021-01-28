@@ -46,16 +46,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<insert id="writeContents" parameterType="sbkim.com.vo.BoardVO">
 		INSERT INTO WEBBOARD(C_NO, C_TITLE, C_CONTENTS, C_FILENAME, C_VIEW, C_REGDATE, C_CATEGORY, C_INFOCATEGORY, U_ID) 
-		VALUES(WEBBOARD_SEQ.NEXTVAL, #{title}, #{contents}, #{fileName}, #{viewCount}, SYSDATE, #{category}, #{infoCategory}, #{uno})
+		VALUES(WEBBOARD_SEQ.NEXTVAL, #{title}, #{contents}, #{fileName}, #{viewCount}, SYSDATE, #{category}, #{infoCategory}, LOWER(#{uno}))
 	</insert>
+	
+	<!-- fileUpload(게시물 수정시) -->
+	<update id="fileUpload" parameterType="HashMap">
+		UPDATE WEBBOARD SET C_FILENAME = #{fileName}
+		WHERE C_NO = #{cno}
+	</update>
+	
 	
 	<update id="modifyInfo" parameterType="sbkim.com.vo.BoardVO">
 		UPDATE WEBBOARD SET C_TITLE=#{title}, C_CONTENTS=#{contents}, C_CATEGORY = #{category}, C_INFOCATEGORY = #{infoCategory}
-		<choose>
-			<when test="fileName != null">
 			, C_FILENAME = #{fileName}
+		<!-- <choose>
+			<when test="fileName != '' and fileName != null">
 			</when>
-		</choose>
+		</choose> -->
 		WHERE C_NO = #{cno}
 	</update>
 	
@@ -78,7 +85,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="likeDel" parameterType="Integer" >
 		DELETE FROM WEBLIKE WHERE C_NO = #{VALUE}
 	</delete>
-	
 	
 	<update id="plusView">
 		UPDATE WEBBOARD SET C_VIEW = C_VIEW +1 WHERE C_NO= #{VALUE}

@@ -35,11 +35,11 @@
 		
 		//수정
 		$("#mod").click(function(){
-			var url="/board/contentsModify.do?cno=${info.cno}";
+			/* var url="/board/contentsModify.do?cno=${info.cno}";
 			var name="수정하기";
 			var option="width=700px, height=600px, top=100px, left=650px, location=no, scrollbars=yes, status=no";
-			window.open(url, name, option);
-			//location.href="/board/contentsModify.do?cno=${info.cno}"
+			window.open(url, name, option); */
+			location.href="/board/contentsModify.do?cno=${info.cno}"
 		})
 		
 		//삭제
@@ -49,8 +49,6 @@
 				location.href="/board/contentsDelete.do?cno=${info.cno}";
 			}
 		})
-		
-		
 		
 		
 		//좋아요
@@ -172,7 +170,9 @@
 				</div>
 				<div class="panel panel-body infoBody">
 					<div class="pannel contentsPart">
+						<c:if test="${info.fileName != null }">
 						<img alt="" src="/board/resources/fileupload/${info.fileName}" width="20%">
+						</c:if>
 						${info.contents}
 						
 					</div>

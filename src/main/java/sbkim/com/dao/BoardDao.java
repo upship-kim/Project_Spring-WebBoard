@@ -1,17 +1,14 @@
 package sbkim.com.dao;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.aggregation.VariableOperators.Map;
 
 import sbkim.com.vo.BoardVO;
 import sbkim.com.vo.LikeVO;
@@ -62,7 +59,7 @@ public class BoardDao extends SqlSessionDaoSupport {
 	//board-select 
 	public List<BoardVO> selectBoard(String sort){
 		System.out.println("dao: selectBaord");
-		System.out.println(sort);
+		System.out.println("sort:"+sort);
 		HashMap<String, String>map1 = new HashMap<String, String>();
 		map1.put("map", sort);
 		System.out.println("이거:"+map1.get("map"));
@@ -78,6 +75,12 @@ public class BoardDao extends SqlSessionDaoSupport {
 	public void modifyInfo(BoardVO vo) {
 		System.out.println("dao update: "+vo);
 			this.getSqlSession().update("modifyInfo", vo);
+	}
+	
+	//fileUpload
+	public void fileUpload(HashMap<String, Object> map) {
+		System.out.println("dao fileUpload: "+map);
+		this.getSqlSession().update("fileUpload", map);
 	}
 	
 	//infoBoard - read
@@ -104,7 +107,7 @@ public class BoardDao extends SqlSessionDaoSupport {
 		HashMap<String, Object>map = new HashMap<String, Object>();
 		map.put("cno", cno);
 		map.put("id", id);
-		System.out.println(this.getSqlSession().selectOne("likeState", map));
+		System.out.println("이건머 "+this.getSqlSession().selectOne("likeState", map));
 			if(this.getSqlSession().selectOne("likeState", map)==null) {
 				return 0;
 			}else {

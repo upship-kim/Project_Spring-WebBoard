@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import sbkim.com.dao.BoardDao;
 import sbkim.com.vo.BoardVO;
@@ -56,7 +57,7 @@ public class BoardController {
 		//System.out.println("아이디저장"+saveId);
 		if(dao.selectIdForLogin(id, pw)) {
 			Cookie cookie = new Cookie("id", id);
-			session.setAttribute("id", id);
+			session.setAttribute("id", id.toLowerCase());
 			session.setMaxInactiveInterval(60*60);
 			if(saveId!=null) {
 				cookie.setValue(id);
@@ -80,7 +81,7 @@ public class BoardController {
 	//로그아웃
 	@RequestMapping(value="logout.do")
 	public String logout(String id, Model model, HttpSession session) {
-		System.out.println(id);
+		System.out.println("logout: "+id);
 		session.removeAttribute("id");
 		return "view/contents/main";
 	}
@@ -107,6 +108,7 @@ public class BoardController {
 				fos.write(file.getBytes());
 				vo.setFileName(originFileName);
 			} catch (Exception e) {
+				e.printStackTrace();
 				// TODO: handle exception
 			} finally {
 				try {
@@ -121,23 +123,25 @@ public class BoardController {
 		System.out.println("filelength:"+originFileName.length());
 		System.out.println("fileSize:"+file.getSize());
 		System.out.println("fileContentsType:"+file.getContentType());
-			dao.writeContents(vo);
+		dao.writeContents(vo);
 		return "view/contents/main";
 	}
 	
-	//summerWrite - 수정
-	@RequestMapping(value="boardUpdate.do")
-	public String updateContents(BoardVO vo, @RequestParam(value="file", defaultValue="null")MultipartFile file) {
+	//summerWrite - 게시물 내용 수정
+	@RequestMapping(value="modifyContents.do")
+	public String updateContents(BoardVO vo, @RequestParam(value="file")MultipartFile file) {
+		System.out.println("form1 :"+vo);
 		String loc="C:\\Sangbae\\6.Project\\TeamProject\\board\\src\\main\\webapp\\resources\\fileupload\\";
 		FileOutputStream fos = null; 
-		String fileName = file.getOriginalFilename();
-		System.out.println("file 제목: "+fileName);
-		if(fileName.length()>0) {
+		String originFileName = file.getOriginalFilename();
+		System.out.println("file 제목: "+file.getOriginalFilename());
+		if(originFileName.length()>0) {
 			try {
-				fos = new FileOutputStream(new File(loc+fileName));
+				fos = new FileOutputStream(new File(loc+originFileName));
 				fos.write(file.getBytes());
-				vo.setFileName(fileName);
+				vo.setFileName(originFileName);
 			} catch (Exception e) {
+				e.printStackTrace();
 				// TODO: handle exception
 			} finally {
 				try {
@@ -146,21 +150,21 @@ public class BoardController {
 					// TODO: handle exception
 				}
 			}
+		}else {
+			vo.setFileName(null);
 		}
-		System.out.println("form:"+vo);
-		System.out.println("fileName:"+fileName);
-		System.out.println("filelength:"+fileName.length());
-		System.out.println("fileSize:"+file.getSize());
-		System.out.println("fileContentsType:"+file.getContentType());
+		
 		dao.modifyInfo(vo);
+		System.out.println("form2 :"+vo);
 		return "view/contents/main";
 	}
 	
-	//contentsModify - 게시물 수정 
+	
+	//contentsModify - 게시물 수정을 위한 기존 데이터 출력 
 	@RequestMapping(value="contentsModify.do")
 	public String infoModify(@RequestParam(value="cno", required=false)int cno, Model model) {
-			model.addAttribute("modify", dao.infoBoard(cno));
-		return "view/contents/summerNote"; 
+		model.addAttribute("modify", dao.infoBoard(cno));
+		return "view/contents/boardWrite"; 
 	}
 	
 	//contentsDelete - 게시물 삭제 
@@ -173,7 +177,7 @@ public class BoardController {
 	//infoBoard - 게시물 확인 & 조회수 증가 
 	@RequestMapping(value="infoBoard.do")
 	public String infoBoard(@RequestParam(value="cno", required=false) int cno, Model model, HttpSession session) {
-		System.out.println(cno);
+		System.out.println("게시물 확인 및 조회수 증가:"+cno);
 		String id=(String)session.getAttribute("id");
 		dao.plusView(cno);	//조회수 증가 
 		model.addAttribute("likeState", dao.likeState(cno, id));	//좋아요 상태 체크
