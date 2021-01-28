@@ -49,12 +49,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		VALUES(WEBBOARD_SEQ.NEXTVAL, #{title}, #{contents}, #{fileName}, #{viewCount}, SYSDATE, #{category}, #{infoCategory}, LOWER(#{uno}))
 	</insert>
 	
-	<!-- fileUpload(게시물 수정시) -->
-	<update id="fileUpload" parameterType="HashMap">
-		UPDATE WEBBOARD SET C_FILENAME = #{fileName}
-		WHERE C_NO = #{cno}
-	</update>
-	
 	
 	<update id="modifyInfo" parameterType="sbkim.com.vo.BoardVO">
 		UPDATE WEBBOARD SET C_TITLE=#{title}, C_CONTENTS=#{contents}, C_CATEGORY = #{category}, C_INFOCATEGORY = #{infoCategory}
