@@ -10,6 +10,7 @@
 	}
 	#create{
 		float: right;
+		width: 7rem;
 	}
 	.option{
 		display: flex;
@@ -47,6 +48,9 @@
 	.searchForm{
 		display: flex;
 		justify-content: space-between;
+	}
+	.searchForm button{
+		width: 7rem;
 	}
 	
 	.board{
@@ -103,6 +107,7 @@
 		width: 20px;
 		margin-bottom: 40%;
 	}
+	
 	.reply-info-icon img{
 		width: 20px;
 		margin-bottom: 30%;

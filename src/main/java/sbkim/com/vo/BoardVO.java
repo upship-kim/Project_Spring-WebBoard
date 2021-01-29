@@ -12,7 +12,7 @@ public class BoardVO {
 	private String infoCategory;
 	private String uno;
 	private int lCount;
-	
+	private String search;
 	
 	public BoardVO() {
 		super();
@@ -34,6 +34,7 @@ public class BoardVO {
 		this.lCount = lCount;
 	}
 
+	
 
 	public int getCno() {
 		return cno;

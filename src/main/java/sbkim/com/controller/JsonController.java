@@ -4,9 +4,11 @@ package sbkim.com.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import sbkim.com.dao.BoardDao;
+import sbkim.com.vo.BoardVO;
 import sbkim.com.vo.LikeVO;
 
 @RestController
@@ -91,6 +94,19 @@ public class JsonController {
 		
 	}
 	
+	
+	//search - 검색
+	@RequestMapping(value="search.do")
+	public List<BoardVO> Search(@RequestParam(value="search")String search, String sort) {
+		HashMap<String, String>map = new HashMap<String, String>();
+		map.put("search", search);
+		map.put("sort", sort);
+		
+		System.out.println(sort+" / "+search);
+		System.out.println("map: "+map);
+		
+		return dao.search(map); 
+	}
 	
 
 }
