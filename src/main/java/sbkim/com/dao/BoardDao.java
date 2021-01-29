@@ -61,8 +61,8 @@ public class BoardDao extends SqlSessionDaoSupport {
 		System.out.println("dao: selectBaord");
 		System.out.println("sort:"+sort);
 		HashMap<String, String>map1 = new HashMap<String, String>();
-		map1.put("map", sort);
-		System.out.println("이거:"+map1.get("map"));
+		map1.put("sort", sort);
+		System.out.println("이거:"+map1.get("sort"));
 		return this.getSqlSession().selectList("selectBoard", map1);
 	}
 	
@@ -155,6 +155,11 @@ public class BoardDao extends SqlSessionDaoSupport {
 		
 	}
 	
+	//search - search
+	public List<BoardVO> search(HashMap<String, String>map) {
+		System.out.println("dao map: "+map);
+		return this.getSqlSession().selectList("search", map);
+	}
 
 	
 }
