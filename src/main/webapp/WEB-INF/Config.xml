@@ -12,6 +12,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="sbkim.com.vo.UserVO" alias="user"/>
 		<typeAlias type="sbkim.com.vo.BoardVO" alias="board"/>
 		<typeAlias type="sbkim.com.vo.LikeVO" alias="like"/>
+		<typeAlias type="sbkim.com.vo.ReplyVO" alias="reply"/>
 	</typeAliases>
 	
 	
