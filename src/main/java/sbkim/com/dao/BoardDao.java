@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import sbkim.com.vo.BoardVO;
 import sbkim.com.vo.LikeVO;
+import sbkim.com.vo.ReplyVO;
 import sbkim.com.vo.UserVO;
 
 public class BoardDao extends SqlSessionDaoSupport {
@@ -159,6 +160,16 @@ public class BoardDao extends SqlSessionDaoSupport {
 	public List<BoardVO> search(HashMap<String, String>map) {
 		System.out.println("dao map: "+map);
 		return this.getSqlSession().selectList("search", map);
+	}
+	
+	//reply - select
+	public List<ReplyVO> replySelect(){
+		return this.getSqlSession().selectList("replySelect");
+	}
+	
+	//reply - insert
+	public void replyInsert(ReplyVO vo){
+		this.getSqlSession().insert("replyInsert", vo);
 	}
 
 	

@@ -1,23 +1,17 @@
 package sbkim.com.controller;
 
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import sbkim.com.dao.BoardDao;
-import sbkim.com.vo.BoardVO;
 import sbkim.com.vo.LikeVO;
+import sbkim.com.vo.ReplyVO;
 
 @RestController
 public class JsonController {
@@ -93,6 +87,21 @@ public class JsonController {
 		return "success";
 		
 	}
+	
+	//reply - 댓글 조회
+	@RequestMapping(value="replySelect.do")
+	public List<ReplyVO> replySelect(){
+		return dao.replySelect();
+	}
+
+	//reply - 댓글 등록
+	@RequestMapping(value="reply.do")
+	public List<ReplyVO> replyInsert(ReplyVO vo){
+		System.out.println("json con: "+vo);
+		dao.replyInsert(vo);
+		return replySelect();
+	}
+	
 	
 	
 	

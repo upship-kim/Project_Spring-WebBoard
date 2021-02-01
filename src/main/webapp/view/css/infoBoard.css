@@ -71,5 +71,22 @@
 		vertical-align: middle;
 	}
 	
+	.tf_cmt{
+		width: 100%;
+	}
+	
+	form {
+		margin-bottom: 80px;
+	}
+	
+	form button {
+		float: right;
+	} 
+	
+	blockquote button{
+		float: right;
+	}
+	
+	
 	
 	

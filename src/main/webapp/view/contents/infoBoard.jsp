@@ -127,6 +127,90 @@
 				}); // success exit
 			}//else if문 
 		}
+		
+		$(".tf_cmt").keydown(function(){
+			//console.log($(".tf_cmt").val().size);
+			$(".txt_byte").html($(".tf_cmt").val().length);
+			if($(".tf_cmt").val().length>300){
+				alert('입력 가능한 글자 수를 초과하였습니다.');
+				$(".tf_cmt").val($(".tf_cmt").val().substring(0,299));
+			}
+		})
+		
+		$.ajax({
+			url: '/board/replySelect.do',
+			type: 'post',
+			dataType: 'json',
+			success:function(data){
+				console.log(data);
+				printList(data);
+			}
+		})
+		
+		$("form button").click(function(){
+			 if($("#replyId").text()==null || $("#contents").val().length<1 ){
+				alert('내용을 입력해주세요.');
+			}else{
+				$.ajax({
+					url: '/board/reply.do',
+					type: 'post',
+					dataType: 'json',
+					data: $("form[name='replyFrm']").serialize(),
+					success:function(data){
+						console.log(data);
+						printList(data);
+					}
+				})
+			} 
+		})
+		function printList(data){
+			var temp="";
+			var id = '${id}';
+			 /*  $(data).each(function(index, dom){
+				//console.log(dom.uno==id);
+				if(id==dom.uno){
+					temp+='<blockquote>';
+					temp+='<h5>'+dom.rContents+'</h5>';
+					temp+='<footer>';
+					temp+='<span>'+dom.uno+'</span>,&nbsp;&nbsp;';
+					temp+='<span>'+dom.rRegdate+'</span>';
+					temp+='<button type="button" class="btn btn-danger">삭제</button>';
+					temp+='</footer>';
+					temp+='</blockquote>';
+				} else{
+					temp+='<blockquote>';
+					temp+='<h5>'+dom.rContents+'</h5>';
+					temp+='<footer>';
+					temp+='<span>'+dom.uno+'</span>,&nbsp;&nbsp;';
+					temp+='<span>'+dom.rRegdate+'</span>';
+					temp+='</footer>';
+					temp+='</blockquote>';
+				}
+			})   */
+			  for(var i=0; i<data.length;i++){
+				if(id==data[i].uno){
+					temp+='<blockquote>';
+					temp+='<h5>'+data[i].rContents+'</h5>';
+					temp+='<footer>';
+					temp+='<span>'+data[i].uno+'</span>,&nbsp;&nbsp;';
+					temp+='<span>'+data[i].rRegdate+'</span>';
+					temp+='<button type="button" class="btn btn-danger">삭제</button>';
+					temp+='</footer>';
+					temp+='</blockquote>';
+				}else{
+					temp+='<blockquote>';
+					temp+='<h5>'+data[i].rContents+'</h5>';
+					temp+='<footer>';
+					temp+='<span>'+data[i].uno+'</span>,&nbsp;&nbsp;';
+					temp+='<span>'+data[i].rRegdate+'</span>';
+					temp+='</footer>';
+					temp+='</blockquote>';
+				}
+			}  
+			 
+			$(".replyInfo").html(temp);
+		}
+		
 	});
 
 </script>
@@ -137,15 +221,12 @@
 	<header>
  		<jsp:include page="../include/header.jsp"/>
 	</header>
-
 	<nav>
 		<jsp:include page="../include/menuBar.jsp"/>
 	</nav>
 	<div class="page">
 		<h3>${info.infoCategory}</h3>  
 		<br>
-		<%-- ${info }<br> --%>
-		<%-- ${id } --%>
 		<div class="infoBtns">
 			<span><button id="list" class="btn btn-default listBtn">목록</button></span>
 			<c:set var="uno" value="${ info.uno }"/>
@@ -202,23 +283,30 @@
 		<!-- reply -->
 		<div class="cmt_comm">
 		<!-- reply form -->
-     		<form action="#" name="frm">
-        		<legend class="screen_out">댓글 작성</legend>
-        		<p><label id="replyId">dd</label></p>
-            	<textarea class="tf_cmt" cols="90" rows="5" title="한줄 토크를 달아주세요" id="contents" name="contents" >한줄 토크를 달아주세요! (300자)</textarea>
-          		<button type="submit" class="btn btn-default">등록</button>
-           		<p class="info_append">
-              	<span class="screen_out">입력된 바이트 수 : </span> <span class="txt_byte">0</span> / 300자
-           		</p>
+     		<form action="#" name="replyFrm" method="post">
+        		<h4 class="screen_out">댓글 작성</h4>
+        		<hr>
+        		<p><label id="replyId">${id }</label></p>
+            	<textarea class="tf_cmt" cols="90" rows="5" placeholder="한줄 토크를 달아주세요" id="contents" name="rContents" ></textarea>
+          		<button type="button" class="btn btn-default">등록</button>
+           		<p class="info_append"><small>
+              	<span class="screen_out"></span><span class="txt_byte">0</span> / 300자
+           		</small></p>
+           		<input type="hidden" name="cno" value="${info.cno}">
+           		<input type="hidden" name="uno" value="${id}">
      		</form>
       <!-- form -->
       
+      	<h4 class="screen_out">전체 댓글</h4>
+		<hr>
+     	<div class="replyInfo">
+		 
+		</div>
+			
+			
+     		<hr>
       
-      
-      <strong class="screen_out">전체 댓글</strong>
-      
-      </div>
-   </div>
+      	</div>
 	</div>
 </body>
 </html>
