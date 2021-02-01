@@ -21,8 +21,8 @@
 		<c:choose>
 		<c:when test="${id eq null}">
 		<ul id="nav">
-			<li><strong><a href="/board/view//contents/login.jsp">LOGIN</a></strong></li>
-			<li><strong><a href="/board/view//contents/join.jsp">JOIN</a></strong></li>
+			<li><strong><a href="/board/view/contents/login.jsp">LOGIN</a></strong></li>
+			<li><strong><a href="/board/view/contents/join.jsp">JOIN</a></strong></li>
 		</ul>
 		</c:when>
 		<c:otherwise>
