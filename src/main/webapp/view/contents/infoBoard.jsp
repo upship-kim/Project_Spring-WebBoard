@@ -196,7 +196,29 @@
 			</div> 
 				</c:otherwise>
 			</c:choose> 
-		</div><!-- board -->
+		</div>
+		<!-- board -->
+		
+		<!-- reply -->
+		<div class="cmt_comm">
+		<!-- reply form -->
+     		<form action="#" name="frm">
+        		<legend class="screen_out">댓글 작성</legend>
+        		<p><label id="replyId">dd</label></p>
+            	<textarea class="tf_cmt" cols="90" rows="5" title="한줄 토크를 달아주세요" id="contents" name="contents" >한줄 토크를 달아주세요! (300자)</textarea>
+          		<button type="submit" class="btn btn-default">등록</button>
+           		<p class="info_append">
+              	<span class="screen_out">입력된 바이트 수 : </span> <span class="txt_byte">0</span> / 300자
+           		</p>
+     		</form>
+      <!-- form -->
+      
+      
+      
+      <strong class="screen_out">전체 댓글</strong>
+      
+      </div>
+   </div>
 	</div>
 </body>
 </html>

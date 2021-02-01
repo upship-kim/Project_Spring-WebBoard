@@ -13,113 +13,44 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script type="text/javascript">
 	$(function(){
-		/* $.ajax({
-			
-			url: '/board/search.do',
-			type: 'get',
-			dataType: 'json',
-			data: {"search":"", "sort":"cno"},
-			success:function(data){
-				alert("a");
-				//console.log(v);
-				boardPrint(data);
-			}
-		}) */
 		
 		$("#create").click(function(){
 			location.href="/board/view/contents/boardWrite.jsp?category=1";
 		})
-		/* $("#search").click(function(){
-			//alert($("#searchText").val());
-			console.log(document.getElementsByClassName("title")[0].textContent);
-			 var title = document.getElementsByClassName("list");
-			var name; 
-			
-			
-		}) */
 		
 		
 		//search
-
-		$("#searchText").keyup(function(){
+		$("#search").click(function(){
+			var sort = '<%= request.getParameter("sort") %>';
 			var search= $("#searchText").val();
-			ajax(search);
-			
+			alert(search);
+			location.href="/board/search.do?sort="+sort+"&search="+search;
+		})		
+		//sort - 최신순
+		$("#sort-cno").click(function(){
+			alert('a');
+			var search= $("#searchText").val();
+			location.href="/board/search.do?sort=cno&search="+search;
+		})
+		//sort - 좋아요순
+		$("#sort-lcount").click(function(){
+			alert('a');
+			var search= $("#searchText").val();
+			location.href="/board/search.do?sort=lcount&search="+search;
+		})
+		//sort - 댓글순
+		$("#sort-reply").click(function(){
+			alert('a');
+			var search= $("#searchText").val();
+			location.href="/board/search.do?sort=reply&search="+search;
+		})
+		//sort - 조회순
+		$("#sort-view").click(function(){
+			alert('a');
+			var search= $("#searchText").val();
+			location.href="/board/search.do?sort=viewcount&search="+search;
 		})
 		
-		function ajax(search,sort){
-			//alert("ajax");
-			var sort1 = '<%= request.getParameter("sort") %>';
-			$.ajax({
-				url: '/board/search.do',
-				type: 'get',
-				dataType: 'json',
-				data: {"search":search, "sort":sort?null:sort1},
-				success:function(data){
-					//console.log(v);
-					boardPrint(data);
-				}
-			})
-		}
-		
-		function boardPrint(data){
-			console.log(data);
-			var temp;
-			$(".board-list").html('');
-			$(data).each(function(index, dom){
-				temp+= '<li class="list">';
-				temp+= '<div class="first-wrap">';
-				temp+= '<div class="prop">';
-				temp+= '<span id="no">#'+dom.cno+'</span>';
-				temp+= '<span id="icon">'+dom.infoCategory+'</span>';
-				temp+= '</div>';
-				temp+= '<h4 id="title" class="title"><a href="/board/infoBoard.do?cno='+dom.cno+'">'+dom.title+'</a></h4>';
-				temp+= '</div>';
-				temp+= '<div class="second-wrap">';
-				temp+= '<div class="second-wrap-inline">';
-				temp+= '<div class="like-info">';
-				temp+= '<ul>';
-				temp+= '<li class="like-info-icon"><img alt="" src="/board/view/img/like2.png"></li>';
-				temp+= '<li id="like"><h3>'+dom.lCount+'</h3></li>';
-				temp+= '</ul>';
-				temp+= '</div>';
-				temp+= '<div class="reply-info">';
-				temp+= '<ul>';
-				temp+= '<li class="reply-info-icon"><img alt="" src="/board/view/img/reply.png"></li>';
-				temp+= '<li id="reply"><h3>32</h3></li>';
-				temp+= '</ul></div></div></div>';
-				temp+= '<div class="third-wrap">';
-				temp+= '<div class=third-wrap-block>';
-				temp+= '<div class="userInfo">';
-				temp+= '<span id="id">'+dom.uno+'</span>';
-				temp+= '<div class="viewInfo">';
-				temp+= '<span class="viewIcon">조회수:</span>';
-				temp+= '<span id="view">'+dom.viewCount+'</span>';
-				temp+= '</div></div>';
-				temp+= '<div class="writeDate">';
-				temp+= '<span id="date">'+dom.regdate+'</span>';
-				temp+= '</div></div></div>';
-				temp+= '</li>';
-				
-			})
-			$(".board-list").html(temp);
-		}
-		
-		
-		
-		/* $.ajax({
-			url: '/board/select.do',
-			type: 'POST',
-			dataType: 'json',
-			success:function(v){
-				console.log(v);
-			}
-		}) */
-	/* 	location.href="/board/select.do"; */
-		/* $(document).on(function(){
-		 	
-	 		location.href="/board/select.do"; 
-		}); */
 	});
 
 </script>
@@ -133,12 +64,10 @@
 
 	<nav>
 		<jsp:include page="../include/menuBar.jsp"/>
-<%-- <%@ include file="../include/menuBar.jsp"%> --%>
 	</nav>
 	<div class="page">
 		<h3>Public Board</h3>
 		${ id }
-		<%-- <%=session.getAttribute("id") %> --%>
 		<br>
 		<c:if test="${id != null}">
 		<span><button id="create" class="btn btn-default">글쓰기</button></span>
@@ -148,23 +77,28 @@
 			<div class="sortOption">
 				<!-- 전체 -->
 				<div class="sort">
-			  		<span><a href="/board/select.do?sort=cno">최신순</a></span>
-					<span><a href="/board/select.do?sort=lcount">좋아요순</a></span>
-					<span><a href="#">댓글순</a></span>
-					<span><a href="/board/select.do?sort=viewcount">조회순</a></span>
+			  		<span id="sort-cno"><a href="#">최신순</a></span>
+					<span id="sort-lcount"><a href="#">좋아요순</a></span>
+					<span id="sort-reply"><a href="#">댓글순</a></span>
+					<span id="sort-view"><a href="#">조회순</a></span>
 				</div>
 			</div>
 			<div class="searchOption">
 				<div class="searchForm">
-					<input type="text" class="form-control" placeholder="Quick Search" id="searchText">
-					<!-- <span><button type="submit" class="btn btn-default" id="search">
+					<input type="text" class="form-control" placeholder="Search" id="searchText" value="${search}">
+					<span><button type="submit" class="btn btn-default" id="search">
 					<img alt="" src="/board/view/img/search.png" width="18px">
-					</button></span> -->
+					</button></span>
 				</div>
 			</div>
 		</div>
+		${info }
 		<div class="board">
 			<ul class="board-list">
+			
+			<c:if test="${empty list}">
+			<h5>검색 결과가 없습니다.</h5>
+			</c:if>
 			<c:forEach var="i" items="${list}">
 			<li class="list">
 				<div class="first-wrap">
@@ -172,7 +106,11 @@
 						<span id="no">#${i.cno}</span>
 						<span id="icon">${i.infoCategory}</span>
 					</div>
-					<h4 id="title" class="title"><a href="/board/infoBoard.do?cno=${i.cno}">${i.title}</a></h4>
+					<h4 id="title" class="title"><a href="/board/infoBoard.do?cno=${i.cno}">${i.title}
+					<c:if test="${i.fileName!=null}">
+					<img alt="" src="/board/view/img/file.png" width="16px">
+					</c:if>
+					</a></h4>
 				</div>
 				<div class="second-wrap">
 					<div class="second-wrap-inline">
@@ -209,6 +147,7 @@
 			</ul>
 		</div>
 	<br>
+	
 
 
 </div>

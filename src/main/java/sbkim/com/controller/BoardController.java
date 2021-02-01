@@ -2,6 +2,8 @@ package sbkim.com.controller;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.HashMap;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
@@ -184,6 +186,21 @@ public class BoardController {
 		model.addAttribute("info", dao.infoBoard(cno));
 		return "view/contents/infoBoard";
 	}
+	
+	//search - 검색
+		@RequestMapping(value="search.do")
+		public String Search(@RequestParam(value="search")String search, String sort, Model model) {
+			HashMap<String, String>map = new HashMap<String, String>();
+			map.put("search", search);
+			map.put("sort", sort);
+			
+			System.out.println(sort+" / "+search);
+			System.out.println("map: "+map);
+			
+			model.addAttribute("list", dao.search(map)); 
+			model.addAttribute("search", search);
+			return "view/contents/publicBoard";
+		}
 	
 	
 }

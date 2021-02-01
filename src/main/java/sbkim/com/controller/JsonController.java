@@ -95,18 +95,7 @@ public class JsonController {
 	}
 	
 	
-	//search - 검색
-	@RequestMapping(value="search.do")
-	public List<BoardVO> Search(@RequestParam(value="search")String search, String sort) {
-		HashMap<String, String>map = new HashMap<String, String>();
-		map.put("search", search);
-		map.put("sort", sort);
-		
-		System.out.println(sort+" / "+search);
-		System.out.println("map: "+map);
-		
-		return dao.search(map); 
-	}
+	
 	
 
 }
