@@ -12,6 +12,7 @@ public class BoardVO {
 	private String infoCategory;
 	private String uno;
 	private int lCount;
+	private int rCount;
 	private String search;
 	
 	public BoardVO() {
@@ -33,8 +34,27 @@ public class BoardVO {
 		this.uno = uno;
 		this.lCount = lCount;
 	}
-
 	
+	
+	
+
+	public BoardVO(int cno, String title, String contents, String fileName, int viewCount, String regdate,
+			String category, String infoCategory, String uno, int lCount, int rCount, String search) {
+		super();
+		this.cno = cno;
+		this.title = title;
+		this.contents = contents;
+		this.fileName = fileName;
+		this.viewCount = viewCount;
+		this.regdate = regdate;
+		this.category = category;
+		this.infoCategory = infoCategory;
+		this.uno = uno;
+		this.lCount = lCount;
+		this.rCount = rCount;
+		this.search = search;
+	}
+
 
 	public int getCno() {
 		return cno;
@@ -135,13 +155,38 @@ public class BoardVO {
 		this.lCount = lCount;
 	}
 
+	
+
+	public int getrCount() {
+		return rCount;
+	}
+
+
+	public void setrCount(int rCount) {
+		this.rCount = rCount;
+	}
+
+
+	public String getSearch() {
+		return search;
+	}
+
+
+	public void setSearch(String search) {
+		this.search = search;
+	}
+
 
 	@Override
 	public String toString() {
 		return "BoardVO [cno=" + cno + ", title=" + title + ", contents=" + contents + ", fileName=" + fileName
 				+ ", viewCount=" + viewCount + ", regdate=" + regdate + ", category=" + category + ", infoCategory="
-				+ infoCategory + ", uno=" + uno + ", lCount=" + lCount + "]";
+				+ infoCategory + ", uno=" + uno + ", lCount=" + lCount + ", rCount=" + rCount + ", search=" + search
+				+ "]";
 	}
+
+
+
 	
 	
 
