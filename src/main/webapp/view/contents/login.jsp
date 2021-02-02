@@ -31,6 +31,10 @@
 			$("#saveId").val($("#id").val());
 			alert($("#saveId").val());
 		});
+		
+		$(".joinBtn").click(function(){
+			location.href="../contents/join.jsp";
+		})
 	});
 
 </script>

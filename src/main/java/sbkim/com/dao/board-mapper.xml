@@ -141,5 +141,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE C_NO = #{VALUE}
 		ORDER BY R_NO DESC
 	</select>
+	
+	<delete id="replyDelete" parameterType="Integer">
+		DELETE FROM BOARDREPLY 
+		WHERE R_NO = #{VALUE}	
+	</delete>
 
 </mapper>

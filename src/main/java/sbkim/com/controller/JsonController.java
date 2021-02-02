@@ -103,7 +103,15 @@ public class JsonController {
 		return replySelect(vo.getCno());
 	}
 	
-	
+	//reply - 댓글 삭제
+	@RequestMapping(value="delReply.do")
+	public List<ReplyVO> delReply(int rno, int cno) {
+		System.out.println("rno: "+rno);
+		System.out.println("cno: "+cno);
+		dao.replyDelete(rno);
+		return dao.replySelect(cno);
+		
+	}
 	
 	
 	

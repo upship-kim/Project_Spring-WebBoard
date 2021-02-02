@@ -160,6 +160,7 @@
 					success:function(data){
 						console.log(data);
 						printList(data);
+						$("#contents").val('');
 					}
 				})
 			} 
@@ -195,7 +196,7 @@
 					temp+='<footer>';
 					temp+='<span>'+data[i].uno+'</span>,&nbsp;&nbsp;';
 					temp+='<span>'+data[i].rRegdate+'</span>';
-					temp+='<button type="button" class="btn btn-danger">삭제</button>';
+					temp+='<button type="button" class="btn btn-danger delBtn" value="'+data[i].rno+'">삭제</button>';
 					temp+='</footer>';
 					temp+='</blockquote>';
 				}else{
@@ -210,6 +211,21 @@
 			}  
 			 
 			$(".replyInfo").html(temp);
+			
+			$(".delBtn").click(function(){
+				console.log($(this).val());
+				$.ajax({
+					url:'/board/delReply.do?cno='+${info.cno},
+					data: {rno:$(this).val()},
+					type: 'get',
+					dataType: 'json',
+					success:function(data){
+						alert("삭제성공"); 
+						printList(data);
+					}
+					
+				})
+			})
 		}
 		
 	});
