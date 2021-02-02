@@ -95,7 +95,6 @@
 		${info }
 		<div class="board">
 			<ul class="board-list">
-			
 			<c:if test="${empty list}">
 			<h5>검색 결과가 없습니다.</h5>
 			</c:if>
@@ -123,7 +122,7 @@
 						<div class="reply-info">
 							<ul>
 							<li class="reply-info-icon"><img alt="" src="/board/view/img/reply.png"></li>
-							<li id="reply"><h3>32</h3></li>
+							<li id="reply"><h3>${i.rCount}</h3></li>
 							</ul>
 						</div>
 					</div>

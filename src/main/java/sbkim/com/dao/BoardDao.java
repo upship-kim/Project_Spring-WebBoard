@@ -163,13 +163,18 @@ public class BoardDao extends SqlSessionDaoSupport {
 	}
 	
 	//reply - select
-	public List<ReplyVO> replySelect(){
-		return this.getSqlSession().selectList("replySelect");
+	public List<ReplyVO> replySelect(int cno){
+		return this.getSqlSession().selectList("replySelect", cno);
 	}
 	
 	//reply - insert
 	public void replyInsert(ReplyVO vo){
 		this.getSqlSession().insert("replyInsert", vo);
+	}
+	
+	//reply - delete
+	public void replyDelete(int rno){
+		this.getSqlSession().delete("replyDelete", rno);
 	}
 
 	

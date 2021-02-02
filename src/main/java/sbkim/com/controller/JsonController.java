@@ -90,8 +90,9 @@ public class JsonController {
 	
 	//reply - 댓글 조회
 	@RequestMapping(value="replySelect.do")
-	public List<ReplyVO> replySelect(){
-		return dao.replySelect();
+	public List<ReplyVO> replySelect(int cno){
+		System.out.println(cno);
+		return dao.replySelect(cno);
 	}
 
 	//reply - 댓글 등록
@@ -99,10 +100,18 @@ public class JsonController {
 	public List<ReplyVO> replyInsert(ReplyVO vo){
 		System.out.println("json con: "+vo);
 		dao.replyInsert(vo);
-		return replySelect();
+		return replySelect(vo.getCno());
 	}
 	
-	
+	//reply - 댓글 삭제
+	@RequestMapping(value="delReply.do")
+	public List<ReplyVO> delReply(int rno, int cno) {
+		System.out.println("rno: "+rno);
+		System.out.println("cno: "+cno);
+		dao.replyDelete(rno);
+		return dao.replySelect(cno);
+		
+	}
 	
 	
 	
