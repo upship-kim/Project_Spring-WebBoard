@@ -58,7 +58,7 @@
 <c:choose>
 <c:when test="${modify eq null }">
 <form id="new" method="post" action="/board/boardWrite.do" enctype="multipart/form-data">
-			<input type="text" name="uno" value="${id}">
+			<input type="hidden" name="uno" value="${id}">
 		<div>
 			<label>게시판 선택</label>&nbsp;&nbsp; | &nbsp;&nbsp;
 			<label class="radio-inline"><input type="radio" name="category" value="public" checked>Public Board</label>
@@ -104,7 +104,6 @@
 <!-- 게시물 수정하기  -->
 	<div style="padding: 2%;">
 	<h3>게시물 수정하기</h3>
-	${modify }
 	<hr>
 	<form id="mod" method="post" action="/board/modifyContents.do" enctype="multipart/form-data">
 			<input type="hidden" name="cno" value="${modify.cno}">

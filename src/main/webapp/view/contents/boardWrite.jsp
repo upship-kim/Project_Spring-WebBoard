@@ -28,7 +28,7 @@
 		<jsp:include page="../include/menuBar.jsp"/>
 	</nav>
 	<div class="page">
-		<h3>카테고리명</h3>  
+		<h3>Public Board</h3>  
 		<h5>새 글 쓰기</h5>  
 
 		<%-- <%=request.getParameter("category")+"이네?"%> --%>

@@ -123,7 +123,7 @@
 						<div class="reply-info">
 							<ul>
 							<li class="reply-info-icon"><img alt="" src="/board/view/img/reply.png"></li>
-							<li id="reply"><h3>32</h3></li>
+							<li id="reply"><h3>0</h3></li>
 							</ul>
 						</div>
 					</div>

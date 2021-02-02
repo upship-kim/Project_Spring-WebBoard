@@ -135,9 +135,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		VALUES(BOARDREPLY_SEQ.NEXTVAL, #{rContents}, SYSDATE, #{cno}, #{uno})
 	</insert>
 	
-	<select id="replySelect" resultType="reply">
+	<select id="replySelect" resultType="reply" parameterType="Integer">
 		SELECT R_NO AS RNO, R_CONTENTS AS RCONTENTS, TO_CHAR(R_REGDATE, 'YYYY/MM/DD HH24:MI')RREGDATE, C_NO AS CNO, U_ID AS UNO
 		FROM BOARDREPLY
+		WHERE C_NO = #{VALUE}
 		ORDER BY R_NO DESC
 	</select>
 

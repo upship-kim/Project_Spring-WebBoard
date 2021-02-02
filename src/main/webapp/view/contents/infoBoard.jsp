@@ -141,6 +141,7 @@
 			url: '/board/replySelect.do',
 			type: 'post',
 			dataType: 'json',
+			data: {cno:${info.cno}},
 			success:function(data){
 				console.log(data);
 				printList(data);
@@ -300,6 +301,7 @@
       	<h4 class="screen_out">전체 댓글</h4>
 		<hr>
      	<div class="replyInfo">
+		 
 		 
 		</div>
 			
