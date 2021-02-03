@@ -99,8 +99,7 @@ public class JsonController {
 	@RequestMapping(value="reply.do")
 	public List<ReplyVO> replyInsert(ReplyVO vo){
 		System.out.println("json con: "+vo);
-		dao.replyInsert(vo);
-		return replySelect(vo.getCno());
+		return dao.replyInsert(vo);
 	}
 	
 	//reply - 댓글 삭제

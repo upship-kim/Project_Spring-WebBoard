@@ -108,7 +108,7 @@
 					success:function(v){
 						$(".likePart").html(likeBtn);
 						$(".likePart button").val('likeDone');
-						alert('aa');
+				//		alert('aa');
 					},error:function(v){
 						alert('error');
 					}
