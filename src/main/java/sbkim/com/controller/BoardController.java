@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import sbkim.com.dao.BoardDao;
 import sbkim.com.vo.BoardVO;
+import sbkim.com.vo.PageVO;
 import sbkim.com.vo.ReplyVO;
 import sbkim.com.vo.UserVO;
 
@@ -84,11 +85,31 @@ public class BoardController {
 		return "view/contents/main";
 	}
 	
-	//PublicBoard - 게시물 출력
+	//Board - 게시물 출력
 	@RequestMapping(value="select.do")
-	public String selectBoard(Model model, @RequestParam(value="sort")String sort) {
-		System.out.println(dao.selectBoard(sort));
-		model.addAttribute("list", dao.selectBoard(sort));		//게시판 목록 출력
+	public String selectBoard(Model model, @RequestParam(value="category")String category,
+				@RequestParam(value="sort")String sort, String search,
+				@RequestParam(value="page", required=false, defaultValue="1")int page,
+				@RequestParam(value="range", required=false, defaultValue="1")int range) {
+		
+		
+		int listCnt = dao.getListCnt(search);		//전체 게시물 개수 
+		System.out.println("listCntL: "+ listCnt);
+		
+		PageVO pageVo = new PageVO();
+		pageVo.pageInfo(page, range, listCnt);
+
+		HashMap<String, Object>map = new HashMap<String, Object>();
+		map.put("sort", sort);
+		map.put("pageVo", pageVo);
+		map.put("category", category);
+		map.put("search", search);
+		
+		model.addAttribute("category", category);
+		model.addAttribute("pageVo", pageVo);
+		model.addAttribute("sort", sort);
+		model.addAttribute("search", search);
+		model.addAttribute("list", dao.selectBoard(map));		//게시판 목록 출력
 		return "view/contents/publicBoard";
 	}
 	
@@ -183,7 +204,7 @@ public class BoardController {
 		return "view/contents/infoBoard";
 	}
 	
-	//search - 검색
+	/*//search - 검색
 		@RequestMapping(value="search.do")
 		public String Search(@RequestParam(value="search")String search, String sort, Model model) {
 			HashMap<String, String>map = new HashMap<String, String>();
@@ -196,7 +217,7 @@ public class BoardController {
 			model.addAttribute("list", dao.search(map)); 
 			model.addAttribute("search", search);
 			return "view/contents/publicBoard";
-		}
+		}*/
 	
 	
 }

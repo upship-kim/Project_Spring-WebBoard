@@ -23,35 +23,83 @@
 		$("#search").click(function(){
 			var sort = '<%= request.getParameter("sort") %>';
 			var search= $("#searchText").val();
+			var page = ${pageVo.page};
+			var range = ${pageVo.range}; 
 			alert(search);
-			location.href="/board/search.do?sort="+sort+"&search="+search;
+			location.href="/board/select.do?sort="+sort+"&search="+search+'&page='+page+'&range='+range;
 		})		
 		//sort - 최신순
 		$("#sort-cno").click(function(){
 			alert('a');
+			var sort = '<%= request.getParameter("sort") %>';
+			var page = ${pageVo.page};
+			var range = ${pageVo.range}; 
 			var search= $("#searchText").val();
-			location.href="/board/search.do?sort=cno&search="+search;
+			location.href="/board/select.do?sort=cno&search="+search+'&page='+page+'&range='+range;
 		})
 		//sort - 좋아요순
 		$("#sort-lcount").click(function(){
 			alert('a');
+			var sort = '<%= request.getParameter("sort") %>';
+			var page = ${pageVo.page};
+			var range = ${pageVo.range};
 			var search= $("#searchText").val();
-			location.href="/board/search.do?sort=lcount&search="+search;
+			location.href="/board/select.do?sort=lcount&search="+search+'&page='+page+'&range='+range;
 		})
 		//sort - 댓글순
 		$("#sort-reply").click(function(){
 			alert('a');
+			var sort = '<%= request.getParameter("sort") %>';
+			var page = ${pageVo.page};
+			var range = ${pageVo.range};
 			var search= $("#searchText").val();
-			location.href="/board/search.do?sort=reply&search="+search;
+			location.href="/board/select.do?sort=reply&search="+search+'&page='+page+'&range='+range;
 		})
 		//sort - 조회순
 		$("#sort-view").click(function(){
 			alert('a');
+			var sort = '<%= request.getParameter("sort") %>';
+			var page = ${pageVo.page};
+			var range = ${pageVo.range};
 			var search= $("#searchText").val();
-			location.href="/board/search.do?sort=viewcount&search="+search;
+			location.href="/board/select.do?sort=viewcount&search="+search+'&page='+page+'&range='+range;
 		})
 		
+		
 	});
+	
+	/* 이전버튼 */
+	function paging_pre(page, range, rangeSize){
+		console.log(page+' '+range+' '+rangeSize);		
+		var search= $("#searchText").val();
+		sort= '${sort}';
+		search= '${search}';
+		page = parseInt((range-2)*rangeSize)+1; 
+		range = range -1;
+		url= '/board/select.do?sort='+sort+'&page='+page+'&range='+range+'&search='+search;
+		location.href= url; 
+	}
+	
+	/* 페이징 버튼 */
+	function paging(page, range, rangeSize){		//search 값 연동해야함 
+		console.log(page+' '+range+' '+rangeSize);		
+		sort= '${sort}';
+		search= '${search}';
+		url= '/board/select.do?sort='+sort+'&page='+page+'&range='+range+'&search='+search;
+		location.href= url; 
+	}
+	
+	/* 다음버튼 */
+	function paging_next(page, range, rangeSize){
+		console.log(page+' '+range+' '+rangeSize);		
+		sort= '${sort}';
+		search= '${search}';
+		page = parseInt((range * rangeSize))+1; 
+		range = parseInt(range) +1;
+		url= '/board/select.do?sort='+sort+'&page='+page+'&range='+range+'&search='+search;
+		location.href= url; 
+	}
+	
 
 </script>
 
@@ -66,8 +114,17 @@
 		<jsp:include page="../include/menuBar.jsp"/>
 	</nav>
 	<div class="page">
-		<h3>Public Board</h3>
-		${ id }
+		<h3>
+		<c:choose>
+			<c:when test="${category eq 'public'}">
+				Public Board
+			</c:when>
+			<c:otherwise>
+				Private Board
+			</c:otherwise>
+		</c:choose>
+		</h3>
+		
 		<br>
 		<c:if test="${id != null}">
 		<span><button id="create" class="btn btn-default">글쓰기</button></span>
@@ -92,7 +149,7 @@
 				</div>
 			</div>
 		</div>
-		${info }
+		<%-- ${list } --%>
 		<div class="board">
 			<ul class="board-list">
 			<c:if test="${empty list}">
@@ -141,18 +198,28 @@
 						</div>
 					</div>
 				</div>
-			</li>
+			</li>	
 			</c:forEach>
 			</ul>
-  				<ul class="pagination">
-  					<li><a href="#"><</a></li>
-  					<li class="active"><a href="#">1</a></li>
-  					<li><a href="#">2</a></li>
-  					<li><a href="#">3</a></li>
-  					<li><a href="#">4</a></li>
-  					<li><a href="#">5</a></li>
- 					<li><a href="#">></a></li>
-				</ul>
+  			<ul class="pagination">
+  			<c:if test="${pageVo.prev}"> 
+  					<li onclick="paging_pre('${p}', '${pageVo.range}', '${pageVo.rangeSize}');"><a href="#">이전</a></li>
+  			</c:if>
+  			
+  			<c:forEach var="p"  begin="${pageVo.startPage}" end="${pageVo.endPage}">
+  			<c:choose>
+  				 <c:when test="${p eq pageVo.page}">
+  					<li class="active" onclick="paging('${p}', '${pageVo.range}', '${pageVo.rangeSize}');"><a href="#">${p}</a></li>
+  				 </c:when>
+  				 <c:otherwise>
+  					<li onclick="paging('${p}', '${pageVo.range}', '${pageVo.rangeSize}');"><a href="#">${p}</a></li>
+  				 </c:otherwise> 
+  			</c:choose>
+    		</c:forEach>
+  			<c:if test="${pageVo.next}">
+  					<li onclick="paging_next('${p}', '${pageVo.range}', '${pageVo.rangeSize}');"><a href="#">다음</a></li>
+  			</c:if>
+			</ul>
 			
 		</div>
 	<br>

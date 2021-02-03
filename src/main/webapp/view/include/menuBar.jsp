@@ -27,9 +27,11 @@
 			
 		</ul>
 		<ul id="menuList">
-			<li><a href="/board/view/contents/main.jsp">Public Board</a></li>
-			<li><a href="/board/view//contents/privateBoard.jsp">Private Board</a></li>
-			<li><a href="/board/view//contents/publicBoard.jsp">Data Storage</a></li>
+			<li><a href="/board/select.do?category=public&sort=cno">Public Board</a></li>
+			<c:if test="${id != null}">
+			<li><a href="/board/select.do?category=private&sort=cno">Private Board</a></li>
+			</c:if>
+			<li><a href="/board/select.do?category=storage&sort=cno">Data Storage</a></li>
 		</ul>
 	
 	</nav>
