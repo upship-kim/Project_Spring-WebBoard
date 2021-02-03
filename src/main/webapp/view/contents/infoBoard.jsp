@@ -269,7 +269,14 @@
 					</div>
 				</div>
 				<div class="filePart">
-					${info.fileName}&nbsp;&nbsp;<small><a href="/board/downloadAction.do?fileName=${info.fileName}">다운로드</a></small>
+				
+					<c:choose>
+					<c:when test="${info.category eq 'storage'}">
+							첨부파일: ${info.fileName}&nbsp;&nbsp;<small><a href="/board/downloadAction.do?fileName=${info.fileName}">다운로드</a></small>
+					</c:when>
+					<c:otherwise>
+					</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 			
