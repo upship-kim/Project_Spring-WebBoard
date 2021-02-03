@@ -23,13 +23,13 @@
 				if($("#pw").val()=='') alert('PW를 입력하세요');
 				return false;
 			}else{
-				alert('뚱이 안녕? ');
+				//alert('뚱이 안녕? ');
 				$("form").submit();		
 			}
 		});
 		$("#saveId").click(function(){
 			$("#saveId").val($("#id").val());
-			alert($("#saveId").val());
+			//alert($("#saveId").val());
 		});
 		
 		$(".joinBtn").click(function(){

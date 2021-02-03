@@ -27,8 +27,8 @@
 		</c:when>
 		<c:otherwise>
 		<ul id="nav">
+			<li><img src="/board/view/img/online.png">${id}</li>
 			<li><strong><a href="/board/logout.do?id=${id }">LOGOUT</a></strong></li>
-			<li><strong><a href="/board/view//contents/join.jsp">JOIN</a></strong></li>
 		</ul>
 		</c:otherwise>
 		</c:choose>

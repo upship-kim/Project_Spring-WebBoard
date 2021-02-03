@@ -28,6 +28,7 @@
 	}
 	
 	#nav{
+		width: 15%;
 		display: flex;
 		justify-content: flex-end;
 		margin-top: 0.5%;
@@ -35,8 +36,15 @@
 		margin-bottom: 0.5%; 
 		
 	}
-	 #nav li{
+	#nav li{
 		margin-left: 30%;
+		display: inherit;
+	} 
+	#nav li img{
+		margin: auto 10%;
+		width: 10px;
+		height: 10px;
+		
 	} 
 	
 	#subNav{
