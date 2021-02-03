@@ -9,12 +9,15 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.ws.Response;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import sbkim.com.dao.BoardDao;
 import sbkim.com.vo.BoardVO;
@@ -50,7 +53,7 @@ public class BoardController {
 	//로그인
 	@RequestMapping(value="login.do")
 	public String login(String id, String pw, String saveId, Model model, HttpSession session, 
-						HttpServletRequest rq, HttpServletResponse rs) {
+						HttpServletRequest rq, HttpServletResponse rs) throws Exception  {
 		//rq.setAttribute(id, id);
 		//System.out.println(dao.selectIdForLogin(id, pw));
 		//System.out.println("아이디저장"+saveId);
@@ -58,6 +61,12 @@ public class BoardController {
 			Cookie cookie = new Cookie("id", id);
 			session.setAttribute("id", id.toLowerCase());
 			session.setMaxInactiveInterval(60*60);
+			String attemped = (String)session.getAttribute("attemped");
+			if(StringUtils.isNotEmpty(attemped)) {
+				rs.sendRedirect(attemped);
+				session.removeAttribute(attemped);
+			}
+			
 			if(saveId!=null) {
 				cookie.setValue(id);
 				cookie.setMaxAge(60*60);	//1시간 동안 저장 
@@ -82,6 +91,7 @@ public class BoardController {
 	public String logout(String id, Model model, HttpSession session) {
 		System.out.println("logout: "+id);
 		session.removeAttribute("id");
+		session.invalidate();
 		return "view/contents/main";
 	}
 	
@@ -213,5 +223,15 @@ public class BoardController {
 		return "view/contents/infoBoard";
 	}
 	
+	/* 다운로드 컨트롤러 */
+	@RequestMapping(value="downloadAction.do")
+	public ModelAndView downloadStream(String fileName) {
+		String loc="C:\\Sangbae\\6.Project\\TeamProject\\board\\src\\main\\webapp\\resources\\fileupload\\";
+		System.out.println(fileName);
+		File file = new  File(loc+fileName);
+		HashMap<String, File>map = new HashMap();
+		map.put("action", file);
+		return new ModelAndView("download", map);		//servlet-context에 있는 bean name과 맞아야함
+	}
 	
 }

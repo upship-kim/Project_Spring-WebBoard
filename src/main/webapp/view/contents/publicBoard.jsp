@@ -38,7 +38,7 @@
 		$("#sort-cno").click(function(){
 			//alert('a');
 			var sort = '<%= request.getParameter("sort") %>';
-			var category = ${category};
+			var category = '${category}';
 			var page = ${pageVo.page};
 			var range = ${pageVo.range}; 
 			var search= $("#searchText").val();
@@ -139,8 +139,11 @@
 			<c:when test="${category eq 'public'}">
 				Public Board
 			</c:when>
+			<c:when test="${category eq 'private'}">
+				Public Board
+			</c:when>
 			<c:otherwise>
-				Private Board
+				Data Storage
 			</c:otherwise>
 		</c:choose>
 		</h3>

@@ -63,6 +63,10 @@
 	<context:component-scan base-package="sbkim.com.vo" />
 	<context:component-scan base-package="sbkim.com.dao" />
 	
-	
+	<!-- download -->
+	<beans:bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<beans:property name="order" value="0"></beans:property>	<!-- beans 중에서 우선순위 0순위 -->
+	</beans:bean>
+	 <beans:bean name="download" class="sbkim.com.download.DownloadView"/>
 	
 </beans:beans>

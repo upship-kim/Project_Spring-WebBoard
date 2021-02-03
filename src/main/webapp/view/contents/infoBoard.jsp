@@ -58,8 +58,8 @@
 		
 		//좋아요
 		$(document).on('click', '.likePart button', function(){
-			alert('click');
-			console.log($(".likePart button").val());
+			//alert('click');
+			//console.log($(".likePart button").val());
 			if(session!=''){
 				if($(".likePart button").val()=='like'){
 					$.ajax({
@@ -68,11 +68,11 @@
 						dataType: 'text',
 						data: {uno:'${id}', cno:${info.cno}},
 						success:function(v){
-							console.log(v);
-							alert('select okay');
+							//console.log(v);
+							//alert('select okay');
 						likeOkay(v);
 						},error:function(v){
-							alert('시작에러');
+							//alert('시작에러');
 						}
 					});//ajax 종료
 				}//if문 종료
@@ -85,10 +85,10 @@
 					dataType: 'text',
 					data: {uno:'${id}', cno:${info.cno}},
 					success:function(v){
-						console.log(v);
+						//console.log(v);
 						$(".likePart").html(cancleBtn);
 						$(".likePart button").val('like');
-						alert('bb');
+						//alert('bb');
 					}
 				});
 			}
@@ -124,9 +124,9 @@
 					success:function(v){										
 						$(".likePart button").val('likeDone');
 						$(".likePart").html(likeBtn);
-						alert('aa22');
+						//alert('aa22');
 					},error:function(v){
-						alert('error2');
+						//alert('error2');
 					}
 				}); // success exit
 			}//else if문 
@@ -147,7 +147,7 @@
 			dataType: 'json',
 			data: {cno:${info.cno}},
 			success:function(data){
-				console.log(data);
+				//console.log(data);
 				printList(data);
 			}
 		})
@@ -269,7 +269,7 @@
 					</div>
 				</div>
 				<div class="filePart">
-					${info.fileName}
+					${info.fileName}&nbsp;&nbsp;<small><a href="/board/downloadAction.do?fileName=${info.fileName}">다운로드</a></small>
 				</div>
 			</div>
 			

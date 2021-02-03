@@ -67,10 +67,16 @@
 			%>
 			<label class="radio-inline"><input type="radio" name="category" value="public" checked>Public Board</label>
 			<label class="radio-inline"><input type="radio" name="category" value="private">Private Board</label>
+			<label class="radio-inline"><input type="radio" name="category" value="storage">Data Storage</label>
 				
-			<% }else{ %>
+			<% }else if(category.equals("private")){ %>
 			<label class="radio-inline"><input type="radio" name="category" value="public" >Public Board</label>
 			<label class="radio-inline"><input type="radio" name="category" value="private"checked>Private Board</label>
+			<label class="radio-inline"><input type="radio" name="category" value="storage">Data Storage</label>
+			<% }else{ %>
+			<label class="radio-inline"><input type="radio" name="category" value="public" >Public Board</label>
+			<label class="radio-inline"><input type="radio" name="category" value="private">Private Board</label>
+			<label class="radio-inline"><input type="radio" name="category" value="storage" checked>Data Storage</label>
 			<% }
 		%>
 		
@@ -126,10 +132,17 @@
 			<c:when test="${modify.category eq 'public'}">
 			<label class="radio-inline"><input type="radio" name="category" value="public" checked>Public Board</label>
 			<label class="radio-inline"><input type="radio" name="category" value="private">Private Board</label>
+			<label class="radio-inline"><input type="radio" name="category" value="storage">Data Storage</label>
+			</c:when>
+			<c:when test="${modify.category eq 'private'}">
+			<label class="radio-inline"><input type="radio" name="category" value="public" checked>Public Board</label>
+			<label class="radio-inline"><input type="radio" name="category" value="private">Private Board</label>
+			<label class="radio-inline"><input type="radio" name="category" value="storage">Data Storage</label>
 			</c:when>
 			<c:otherwise>
 			<label class="radio-inline"><input type="radio" name="category" value="public" >Public Board</label>
-			<label class="radio-inline"><input type="radio" name="category" value="private" checked>Private Board</label>
+			<label class="radio-inline"><input type="radio" name="category" value="private">Private Board</label>
+			<label class="radio-inline"><input type="radio" name="category" value="storage" checked>Data Storage</label>
 			</c:otherwise>
 			</c:choose>
 		</div>
