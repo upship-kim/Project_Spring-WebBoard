@@ -29,14 +29,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE U_ID=LOWER(#{VALUE})
 	</select>
 	
-	<select id="selectBoard" parameterType="String" resultType="sbkim.com.vo.BoardVO" >
+	<!-- <select id="selectBoard" parameterType="String" resultType="sbkim.com.vo.BoardVO" >
 	   SELECT A.C_NO AS CNO, A.C_TITLE AS TITLE, A.C_CONTENTS AS CONTENTS, A.C_FILENAME AS FILENAME, A.C_VIEW AS VIEWCOUNT, 
 	   TO_CHAR(A.C_REGDATE, 'YYYY/MM/DD HH24:MI')REGDATE, A.C_CATEGORY AS CATEGORY, A.C_INFOCATEGORY AS INFOCATEGORY, 
 	   A.U_ID AS UNO, NVL(B.L_COUNT, 0) AS LCOUNT, NVL(B.R_COUNT,0)RCOUNT
 		FROM WEBBOARD A LEFT JOIN (SELECT A.C_NO, SUM(A.L_COUNT)L_COUNT, NVL(C.R_NO,0)R_COUNT FROM WEBLIKE A 
 		FULL JOIN (  SELECT C_NO, COUNT(R_NO)R_NO FROM BOARDREPLY  GROUP BY C_NO) C ON A.C_NO = C.C_NO GROUP BY A.C_NO, C.R_NO)B
   		ON A.C_NO = B.C_NO 
-  		<!-- WHERE C_TITLE LIKE '%#{search}%' --> 
+  		WHERE C_TITLE LIKE '%#{search}%' 
   		ORDER BY
   		<choose>
   		 <when test="sort == 'cno'">CNO DESC</when>
@@ -45,6 +45,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   		 <when test="sort == 'viewcount'">VIEWCOUNT DESC</when>
   		<otherwise>CATEGORY DESC</otherwise>
   		</choose>
+	</select> -->
+	<select id="selectBoard" parameterType="HashMap" resultType="sbkim.com.vo.BoardVO" >
+		SELECT RM, CNO, TITLE, CONTENTS, FILENAME, VIEWCOUNT, REGDATE, CATEGORY, INFOCATEGORY, UNO, LCOUNT, RCOUNT 
+		FROM (
+		SELECT  ROWNUM RM, CNO, TITLE, CONTENTS, FILENAME, VIEWCOUNT, REGDATE, CATEGORY, INFOCATEGORY, UNO, LCOUNT, RCOUNT 
+		FROM(
+		SELECT A.C_NO AS CNO, A.C_TITLE AS TITLE, A.C_CONTENTS AS CONTENTS, A.C_FILENAME AS FILENAME, A.C_VIEW AS VIEWCOUNT, TO_CHAR(A.C_REGDATE, 'YYYY/MM/DD HH24:MI')REGDATE, 
+              A.C_CATEGORY AS CATEGORY, A.C_INFOCATEGORY AS INFOCATEGORY, A.U_ID AS UNO, NVL(B.L_COUNT, 0) AS LCOUNT, NVL(B.R_COUNT,0)RCOUNT
+		FROM WEBBOARD A 
+		LEFT JOIN (
+		SELECT A.C_NO, SUM(A.L_COUNT)L_COUNT, NVL(C.R_NO,0)R_COUNT FROM WEBLIKE A 
+		FULL JOIN ( 
+		SELECT C_NO, COUNT(R_NO)R_NO FROM BOARDREPLY  GROUP BY C_NO) C ON A.C_NO = C.C_NO GROUP BY A.C_NO, C.R_NO) B
+		ON A.C_NO = B.C_NO 
+   		WHERE C_CATEGORY=#{category} AND  C_TITLE LIKE '%'||#{search}||'%'
+    	ORDER BY 
+    	<choose>
+  		 <when test="sort == 'cno'">CNO DESC</when>
+  		 <when test="sort == 'lcount'">LCOUNT DESC</when>
+  		 <when test="sort == 'reply'">RCOUNT DESC</when>
+  		 <when test="sort == 'viewcount'">VIEWCOUNT DESC</when>
+  		<otherwise>CATEGORY DESC</otherwise>
+  		</choose>
+    	) A
+        )
+      	WHERE RM BETWEEN #{pageVo.startList} AND #{pageVo.listSize}
 	</select>
 	
 	<insert id="writeContents" parameterType="sbkim.com.vo.BoardVO">
@@ -152,5 +178,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		DELETE FROM BOARDREPLY 
 		WHERE R_NO = #{VALUE}	
 	</delete>
+	
+	<!-- 모든 게시물 수 조회  -->
+	<select id="getListCnt" parameterType="String" resultType="Integer">
+		 SELECT COUNT(C_NO) AS LISTCNT FROM WEBBOARD WHERE C_TITLE LIKE '%'||#{VALUE}||'%'
+	</select>
+	
 
 </mapper>

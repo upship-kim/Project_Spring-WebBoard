@@ -58,13 +58,12 @@ public class BoardDao extends SqlSessionDaoSupport {
 	}
 	
 	//board-select 
-	public List<BoardVO> selectBoard(String sort){
+	public List<BoardVO> selectBoard(HashMap<String, Object>map){
 		System.out.println("dao: selectBaord");
-		System.out.println("sort:"+sort);
-		HashMap<String, String>map1 = new HashMap<String, String>();
-		map1.put("sort", sort);
-		System.out.println("이거:"+map1.get("sort"));
-		return this.getSqlSession().selectList("selectBoard", map1);
+		System.out.println("sort:"+map.get("sort"));
+		System.out.println("dao map?:"+map);
+		System.out.println(this.getSqlSession().selectList("selectBoard", map));
+		return this.getSqlSession().selectList("selectBoard", map);
 	}
 	
 	//board - write
@@ -176,6 +175,10 @@ public class BoardDao extends SqlSessionDaoSupport {
 	public void replyDelete(int rno){
 		this.getSqlSession().delete("replyDelete", rno);
 	}
-
+	
+	//paging - getListCnt - 모든 게시물 수 
+	public int getListCnt(String search) {
+		return this.getSqlSession().selectOne("getListCnt", search);
+	}
 	
 }
