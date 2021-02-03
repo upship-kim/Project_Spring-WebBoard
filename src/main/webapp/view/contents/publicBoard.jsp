@@ -12,10 +12,11 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script type="text/javascript">
-	$(function(){
+	var category = '${category}';
 		
+	$(function(){
 		$("#create").click(function(){
-			location.href="/board/view/contents/boardWrite.jsp?category=1";
+			location.href="/board/view/contents/boardWrite.jsp?category="+category;
 		})
 		
 		
@@ -25,78 +26,97 @@
 			var search= $("#searchText").val();
 			var page = ${pageVo.page};
 			var range = ${pageVo.range}; 
-			alert(search);
-			location.href="/board/select.do?sort="+sort+"&search="+search+'&page='+page+'&range='+range;
+			if(search.length == 0){
+				alert('검색어를 입력해주세요');
+				return false;
+			}else{
+				location.href="/board/select.do?category="+category+"&sort="+sort+"&search="+search+'&page='+page+'&range='+range;
+				
+			}
 		})		
 		//sort - 최신순
 		$("#sort-cno").click(function(){
-			alert('a');
+			//alert('a');
 			var sort = '<%= request.getParameter("sort") %>';
+			var category = ${category};
 			var page = ${pageVo.page};
 			var range = ${pageVo.range}; 
 			var search= $("#searchText").val();
-			location.href="/board/select.do?sort=cno&search="+search+'&page='+page+'&range='+range;
+			location.href="/board/select.do?category="+category+"&sort=cno&search="+search+'&page='+page+'&range='+range;
 		})
 		//sort - 좋아요순
 		$("#sort-lcount").click(function(){
-			alert('a');
+			//alert('a');
 			var sort = '<%= request.getParameter("sort") %>';
+			var category = '${category}';
 			var page = ${pageVo.page};
 			var range = ${pageVo.range};
 			var search= $("#searchText").val();
-			location.href="/board/select.do?sort=lcount&search="+search+'&page='+page+'&range='+range;
+			location.href="/board/select.do?category="+category+"&sort=lcount&search="+search+'&page='+page+'&range='+range;
 		})
 		//sort - 댓글순
 		$("#sort-reply").click(function(){
-			alert('a');
+			//alert('a');
 			var sort = '<%= request.getParameter("sort") %>';
+			var category = '${category}';
 			var page = ${pageVo.page};
 			var range = ${pageVo.range};
 			var search= $("#searchText").val();
-			location.href="/board/select.do?sort=reply&search="+search+'&page='+page+'&range='+range;
+			location.href="/board/select.do?category="+category+"&sort=reply&search="+search+'&page='+page+'&range='+range;
 		})
 		//sort - 조회순
 		$("#sort-view").click(function(){
-			alert('a');
+		//	alert('a');
 			var sort = '<%= request.getParameter("sort") %>';
+			var category = '${category}';
 			var page = ${pageVo.page};
 			var range = ${pageVo.range};
 			var search= $("#searchText").val();
-			location.href="/board/select.do?sort=viewcount&search="+search+'&page='+page+'&range='+range;
+			location.href="/board/select.do?category="+category+"&sort=viewcount&search="+search+'&page='+page+'&range='+range;
 		})
 		
 		
 	});
-	
+	function infoBoard(cno){
+		sort= '${sort}';
+		search= '${search}';
+		var page = ${pageVo.page};
+		var range = ${pageVo.range};
+		var url="/board/infoBoard.do?category="+category+"&sort="+sort+"&search="+search+'&page='+page+'&range='+range+'&cno='+cno;
+		location.href= url; 
+	}
 	/* 이전버튼 */
 	function paging_pre(page, range, rangeSize){
 		console.log(page+' '+range+' '+rangeSize);		
 		var search= $("#searchText").val();
+		var category = '${category}';
 		sort= '${sort}';
 		search= '${search}';
 		page = parseInt((range-2)*rangeSize)+1; 
 		range = range -1;
-		url= '/board/select.do?sort='+sort+'&page='+page+'&range='+range+'&search='+search;
+		url= '/board/select.do?category='+category+'&sort='+sort+'&page='+page+'&range='+range+'&search='+search;
 		location.href= url; 
 	}
 	
 	/* 페이징 버튼 */
 	function paging(page, range, rangeSize){		//search 값 연동해야함 
-		console.log(page+' '+range+' '+rangeSize);		
+		//console.log(page+' '+range+' '+rangeSize);		
+		var category = '${category}';
 		sort= '${sort}';
 		search= '${search}';
-		url= '/board/select.do?sort='+sort+'&page='+page+'&range='+range+'&search='+search;
+		url= '/board/select.do?category='+category+'&sort='+sort+'&page='+page+'&range='+range+'&search='+search;
 		location.href= url; 
 	}
 	
 	/* 다음버튼 */
 	function paging_next(page, range, rangeSize){
-		console.log(page+' '+range+' '+rangeSize);		
+		//console.log(page+' '+range+' '+rangeSize);		
+		var category = '${category}';
 		sort= '${sort}';
 		search= '${search}';
 		page = parseInt((range * rangeSize))+1; 
 		range = parseInt(range) +1;
-		url= '/board/select.do?sort='+sort+'&page='+page+'&range='+range+'&search='+search;
+		url= '/board/select.do?category='+category+'&sort='+sort+'&page='+page+'&range='+range+'&search='+search;
 		location.href= url; 
 	}
 	
@@ -162,7 +182,7 @@
 						<span id="no">#${i.cno}</span>
 						<span id="icon">${i.infoCategory}</span>
 					</div>
-					<h4 id="title" class="title"><a href="/board/infoBoard.do?cno=${i.cno}">${i.title}
+					<h4 id="title" class="title" onclick="infoBoard(${i.cno});"><a href="#">${i.title}
 					<c:if test="${i.fileName!=null}">
 					<img alt="" src="/board/view/img/file.png" width="16px">
 					</c:if>
@@ -201,7 +221,12 @@
 			</li>	
 			</c:forEach>
 			</ul>
-  			<ul class="pagination">
+			<c:choose>
+			<c:when test="${pageVo eq null}">
+			</c:when>
+			
+			<c:otherwise>
+			<ul class="pagination">
   			<c:if test="${pageVo.prev}"> 
   					<li onclick="paging_pre('${p}', '${pageVo.range}', '${pageVo.rangeSize}');"><a href="#">이전</a></li>
   			</c:if>
@@ -220,7 +245,8 @@
   					<li onclick="paging_next('${p}', '${pageVo.range}', '${pageVo.rangeSize}');"><a href="#">다음</a></li>
   			</c:if>
 			</ul>
-			
+			</c:otherwise>
+			</c:choose>
 		</div>
 	<br>
 	

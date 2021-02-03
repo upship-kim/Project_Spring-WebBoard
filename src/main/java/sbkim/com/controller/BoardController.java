@@ -92,18 +92,18 @@ public class BoardController {
 				@RequestParam(value="page", required=false, defaultValue="1")int page,
 				@RequestParam(value="range", required=false, defaultValue="1")int range) {
 		
+		HashMap<String, Object>map = new HashMap<String, Object>();
+		map.put("sort", sort);
+		map.put("category", category);
+		map.put("search", search);
 		
-		int listCnt = dao.getListCnt(search);		//전체 게시물 개수 
+		int listCnt = dao.getListCnt(map);		//전체 게시물 개수 
 		System.out.println("listCntL: "+ listCnt);
 		
 		PageVO pageVo = new PageVO();
 		pageVo.pageInfo(page, range, listCnt);
-
-		HashMap<String, Object>map = new HashMap<String, Object>();
-		map.put("sort", sort);
 		map.put("pageVo", pageVo);
-		map.put("category", category);
-		map.put("search", search);
+
 		
 		model.addAttribute("category", category);
 		model.addAttribute("pageVo", pageVo);
@@ -189,35 +189,29 @@ public class BoardController {
 	//contentsDelete - 게시물 삭제 
 	@RequestMapping(value="contentsDelete.do")
 	public String infoDelete(@RequestParam(value="cno", required=false)int cno) {
+		dao.replyTotalDelete(cno);
 		dao.infoDelete(cno);
 		return "view/contents/main";
 	}
 	
 	//infoBoard - 게시물 확인 & 조회수 증가 
 	@RequestMapping(value="infoBoard.do")
-	public String infoBoard(@RequestParam(value="cno", required=false) int cno, Model model, HttpSession session) {
+	public String infoBoard(@RequestParam(value="cno", required=false) int cno, Model model, HttpSession session,
+							String category, String sort, String search, int page, int range ) {
+		HashMap<String, Object>map = new HashMap<String, Object>();
+		map.put("category", category);
+		map.put("sort", sort);
+		map.put("search", search);
+		map.put("page", page);
+		map.put("range", range);
 		System.out.println("게시물 확인 및 조회수 증가:"+cno);
 		String id=(String)session.getAttribute("id");
 		dao.plusView(cno);	//조회수 증가 
 		model.addAttribute("likeState", dao.likeState(cno, id));	//좋아요 상태 체크
 		model.addAttribute("info", dao.infoBoard(cno));
+		model.addAttribute("map", map);
 		return "view/contents/infoBoard";
 	}
-	
-	/*//search - 검색
-		@RequestMapping(value="search.do")
-		public String Search(@RequestParam(value="search")String search, String sort, Model model) {
-			HashMap<String, String>map = new HashMap<String, String>();
-			map.put("search", search);
-			map.put("sort", sort);
-			
-			System.out.println(sort+" / "+search);
-			System.out.println("map: "+map);
-			
-			model.addAttribute("list", dao.search(map)); 
-			model.addAttribute("search", search);
-			return "view/contents/publicBoard";
-		}*/
 	
 	
 }

@@ -59,11 +59,23 @@
 <c:when test="${modify eq null }">
 <form id="new" method="post" action="/board/boardWrite.do" enctype="multipart/form-data">
 			<input type="hidden" name="uno" value="${id}">
+			
 		<div>
 			<label>게시판 선택</label>&nbsp;&nbsp; | &nbsp;&nbsp;
+		<% String category = request.getParameter("category");
+			if(category.equals("public")){
+			%>
 			<label class="radio-inline"><input type="radio" name="category" value="public" checked>Public Board</label>
 			<label class="radio-inline"><input type="radio" name="category" value="private">Private Board</label>
+				
+			<% }else{ %>
+			<label class="radio-inline"><input type="radio" name="category" value="public" >Public Board</label>
+			<label class="radio-inline"><input type="radio" name="category" value="private"checked>Private Board</label>
+			<% }
+		%>
+		
 		</div>
+		
 		<div>
 			<label>세부 카테고리</label>&nbsp;&nbsp; | &nbsp;&nbsp;
 			<label class="radio-inline"><input type="radio" name="infoCategory" value="테크" checked>테크</label>

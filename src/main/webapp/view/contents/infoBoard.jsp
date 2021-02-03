@@ -30,7 +30,9 @@
 			
 		//목록	
 		$("button#list").click(function(){
-			location.href="/board/view/contents/main.jsp";
+			console.log('${category}');
+			url="/board/select.do?category="+"${map.category}"+"&sort="+"${map.sort}"+"&search="+"${map.search}"+"&page="+"${map.page}"+"&range="+"${map.range}";
+			location.href= url;
 		})
 		
 		//수정
@@ -45,8 +47,11 @@
 		//삭제
 		$("#del").click(function(){
 			var question = confirm("게시물을 삭제하시겠습니까?");
+			//console.log(question);
 			if(question){
 				location.href="/board/contentsDelete.do?cno=${info.cno}";
+			}else{
+				return false;
 			}
 		})
 		
@@ -89,8 +94,7 @@
 			}
 			
 			} else{
-				alert('로그인을 해주세요.');
-				location.href="/board/view/contents/login.jsp";
+				alert('로그인 후 이용 가능합니다.');
 			}
 		}); 
 		
@@ -158,7 +162,7 @@
 					dataType: 'json',
 					data: $("form[name='replyFrm']").serialize(),
 					success:function(data){
-						console.log(data);
+						//console.log(data);
 						printList(data);
 						$("#contents").val('');
 					}
@@ -168,60 +172,49 @@
 		function printList(data){
 			var temp="";
 			var id = '${id}';
-			 /*  $(data).each(function(index, dom){
-				//console.log(dom.uno==id);
-				if(id==dom.uno){
-					temp+='<blockquote>';
-					temp+='<h5>'+dom.rContents+'</h5>';
-					temp+='<footer>';
-					temp+='<span>'+dom.uno+'</span>,&nbsp;&nbsp;';
-					temp+='<span>'+dom.rRegdate+'</span>';
-					temp+='<button type="button" class="btn btn-danger">삭제</button>';
-					temp+='</footer>';
-					temp+='</blockquote>';
-				} else{
-					temp+='<blockquote>';
-					temp+='<h5>'+dom.rContents+'</h5>';
-					temp+='<footer>';
-					temp+='<span>'+dom.uno+'</span>,&nbsp;&nbsp;';
-					temp+='<span>'+dom.rRegdate+'</span>';
-					temp+='</footer>';
-					temp+='</blockquote>';
-				}
-			})   */
-			  for(var i=0; i<data.length;i++){
-				if(id==data[i].uno){
-					temp+='<blockquote>';
-					temp+='<h5>'+data[i].rContents+'</h5>';
-					temp+='<footer>';
-					temp+='<span>'+data[i].uno+'</span>,&nbsp;&nbsp;';
-					temp+='<span>'+data[i].rRegdate+'</span>';
-					temp+='<button type="button" class="btn btn-danger delBtn" value="'+data[i].rno+'">삭제</button>';
-					temp+='</footer>';
-					temp+='</blockquote>';
-				}else{
-					temp+='<blockquote>';
-					temp+='<h5>'+data[i].rContents+'</h5>';
-					temp+='<footer>';
-					temp+='<span>'+data[i].uno+'</span>,&nbsp;&nbsp;';
-					temp+='<span>'+data[i].rRegdate+'</span>';
-					temp+='</footer>';
-					temp+='</blockquote>';
-				}
-			}  
+			if(data.length ==0){
+				temp+='<h5>등록된 댓글이 없습니다.</h5>';
+			}else{
+			  	for(var i=0; i<data.length;i++){
+					if(id==data[i].uno){
+						temp+='<blockquote>';
+						temp+='<h5>'+data[i].rContents+'</h5>';
+						temp+='<footer>';
+						temp+='<span>'+data[i].uno+'</span>,&nbsp;&nbsp;';
+						temp+='<span>'+data[i].rRegdate+'</span>';
+						temp+='<button type="button" class="btn btn-danger delBtn" value="'+data[i].rno+'">삭제</button>';
+						temp+='</footer>';
+						temp+='</blockquote>';
+					}else{
+						temp+='<blockquote>';
+						temp+='<h5>'+data[i].rContents+'</h5>';
+						temp+='<footer>';
+						temp+='<span>'+data[i].uno+'</span>,&nbsp;&nbsp;';
+						temp+='<span>'+data[i].rRegdate+'</span>';
+						temp+='</footer>';
+						temp+='</blockquote>';
+					}
+				}  
+			}
 			 
 			$(".replyInfo").html(temp);
 			
 			$(".delBtn").click(function(){
-				console.log($(this).val());
+				//console.log($(this).val());
 				$.ajax({
 					url:'/board/delReply.do?cno='+${info.cno},
 					data: {rno:$(this).val()},
 					type: 'get',
 					dataType: 'json',
 					success:function(data){
-						alert("삭제성공"); 
-						printList(data);
+						var confirmCheck=confirm("댓글을 삭제하시겠습니까?"); 
+						console.log(confirmCheck);
+						if(confirmCheck){
+							printList(data);
+						}else{
+							return false;							
+						}
+						
 					}
 					
 				})
@@ -304,11 +297,18 @@
         		<h4 class="screen_out">댓글 작성</h4>
         		<hr>
         		<p><label id="replyId">${id }</label></p>
-            	<textarea class="tf_cmt" cols="90" rows="5" placeholder="한줄 토크를 달아주세요" id="contents" name="rContents" ></textarea>
-          		<button type="button" class="btn btn-default">등록</button>
-           		<p class="info_append"><small>
-              	<span class="screen_out"></span><span class="txt_byte">0</span> / 300자
-           		</small></p>
+        		<c:choose>
+        		<c:when test="${id eq null}">
+            		<textarea class="tf_cmt" cols="90" rows="3" placeholder="로그인 후 이용 가능합니다." id="contents" name="rContents" readonly="readonly" ></textarea>
+        		</c:when>
+        		<c:otherwise>
+            		<textarea class="tf_cmt" cols="90" rows="3" placeholder="한 줄 토크를 달아주세요." id="contents" name="rContents" ></textarea>
+          			<button type="hidden" class="btn btn-default">등록</button>
+           			<p class="info_append"><small>
+              		<span class="screen_out"></span><span class="txt_byte">0</span> / 300자
+           			</small></p>
+        		</c:otherwise>
+        		</c:choose>
            		<input type="hidden" name="cno" value="${info.cno}">
            		<input type="hidden" name="uno" value="${id}">
      		</form>

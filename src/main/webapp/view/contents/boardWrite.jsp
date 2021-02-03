@@ -36,7 +36,9 @@
 		<hr>
 		<div class="board">
 			<!-- write form은 아래 summerNote.jsp 내장 -->
-			<jsp:include page="summerNote.jsp"></jsp:include>
+			<jsp:include page="summerNote.jsp">
+			<jsp:param value="<%=request.getParameter(\"category\")%>" name="category"/>
+			</jsp:include>
 		</div>
 		
 	<br>

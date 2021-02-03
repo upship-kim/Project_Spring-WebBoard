@@ -171,14 +171,19 @@ public class BoardDao extends SqlSessionDaoSupport {
 		this.getSqlSession().insert("replyInsert", vo);
 	}
 	
-	//reply - delete
+	//reply - delete - total
+	public void replyTotalDelete(int cno){
+		this.getSqlSession().delete("replyTotalDelete", cno);
+	}
+
+	//reply - delete - each
 	public void replyDelete(int rno){
 		this.getSqlSession().delete("replyDelete", rno);
 	}
 	
 	//paging - getListCnt - 모든 게시물 수 
-	public int getListCnt(String search) {
-		return this.getSqlSession().selectOne("getListCnt", search);
+	public int getListCnt(HashMap<String, Object>map) {
+		return this.getSqlSession().selectOne("getListCnt", map);
 	}
 	
 }

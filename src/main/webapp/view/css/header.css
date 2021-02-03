@@ -6,7 +6,7 @@
 		list-style: none;
 	}
 	#header{
-		background: gray;
+		background: #0e0438eb;
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
