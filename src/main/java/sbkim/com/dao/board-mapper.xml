@@ -68,6 +68,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   		 <when test="sort == 'viewcount'">VIEWCOUNT DESC</when>
   		<otherwise>CATEGORY DESC</otherwise>
   		</choose>
+  		
     	) A
         )
       	WHERE RM BETWEEN #{pageVo.startList} AND #{pageVo.listSize}
