@@ -223,7 +223,7 @@ public class BoardController {
 		return "view/contents/infoBoard";
 	}
 	
-	/* 다운로드 컨트롤러 */
+	//다운로드 컨트롤러
 	@RequestMapping(value="downloadAction.do")
 	public ModelAndView downloadStream(String fileName) {
 		String loc="C:\\Sangbae\\6.Project\\TeamProject\\board\\src\\main\\webapp\\resources\\fileupload\\";
