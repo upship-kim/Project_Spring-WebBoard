@@ -22,4 +22,11 @@
       
 
 ## Screen Shot
+- 공개 게시판
 ![image](https://user-images.githubusercontent.com/75067573/106985768-64053c80-67ad-11eb-8826-b0a2fdd1f069.png)
+- 게시글 상세 페이지
+![image](https://user-images.githubusercontent.com/75067573/106985920-ae86b900-67ad-11eb-93de-493d3b97bc87.png)
+- 검색 
+![image](https://user-images.githubusercontent.com/75067573/106985978-c6f6d380-67ad-11eb-9d34-d922ca71eef8.png)
+- Data Storage 다운로드 페이지 
+![image](https://user-images.githubusercontent.com/75067573/106986110-058c8e00-67ae-11eb-913d-4293db31298d.png)
