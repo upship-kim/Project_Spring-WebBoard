@@ -28,7 +28,15 @@
 		<jsp:include page="../include/menuBar.jsp"/>
 	</nav>
 	<div class="page">
+	<c:choose>
+	<c:when test="${modify eq null }">
 		<h3>새 글 쓰기</h3>  
+	</c:when>
+	<c:otherwise>
+		<h3>게시글 수정</h3>  
+	</c:otherwise>
+	</c:choose>
+	
 
 		<%-- <%=request.getParameter("category")+"이네?"%> --%>
 		<br>

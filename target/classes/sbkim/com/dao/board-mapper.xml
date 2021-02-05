@@ -59,7 +59,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FULL JOIN ( 
 		SELECT C_NO, COUNT(R_NO)R_NO FROM BOARDREPLY  GROUP BY C_NO) C ON A.C_NO = C.C_NO GROUP BY A.C_NO, C.R_NO) B
 		ON A.C_NO = B.C_NO 
-   		WHERE C_CATEGORY=#{category} AND  C_TITLE LIKE '%'||#{search}||'%'
+   		WHERE 
+   		C_CATEGORY=#{category} 
+   		<choose>
+			<when test="category == 'private'">AND U_ID=#{uno}</when>   		
+			<otherwise></otherwise>
+   		</choose>
+   		AND C_TITLE LIKE '%'||#{search}||'%'
     	ORDER BY 
     	<choose>
   		 <when test="sort == 'cno'">CNO DESC</when>

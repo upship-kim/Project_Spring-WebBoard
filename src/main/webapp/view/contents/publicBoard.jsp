@@ -184,6 +184,17 @@
 					<div class="prop">
 						<span id="no">#${i.cno}</span>
 						<span id="icon">${i.infoCategory}</span>
+						<c:choose>
+							<c:when test="${i.infoCategory eq '테크'}">
+							<span id="icon" style="background: #05264c; color: white; border-radius: 2px;"><small>Tech</small></span>
+							</c:when>
+							<c:when test="${i.infoCategory eq '리빙'}">
+							<span id="icon" style="background: #1a6f45; color: white; border-radius: 2px;"><small>Living</small></span>
+							</c:when>
+							<c:otherwise>
+							<span id="icon" style="background: #6f3e10; color: white; border-radius: 2px;"><small>ETC</small></span>
+							</c:otherwise>
+						</c:choose>
 					</div>
 					<h4 id="title" class="title" onclick="infoBoard(${i.cno});"><a href="#">${i.title}
 					<c:if test="${i.fileName!=null}">
