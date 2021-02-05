@@ -121,8 +121,6 @@
 <c:otherwise>
 <!-- 게시물 수정하기  -->
 	<div style="padding: 2%;">
-	<h3>게시물 수정하기</h3>
-	<hr>
 	<form id="mod" method="post" action="/board/modifyContents.do" enctype="multipart/form-data">
 			<input type="hidden" name="cno" value="${modify.cno}">
 			<input type="hidden" name="uno" value="${modify.uno}">
@@ -135,8 +133,8 @@
 			<label class="radio-inline"><input type="radio" name="category" value="storage">Data Storage</label>
 			</c:when>
 			<c:when test="${modify.category eq 'private'}">
-			<label class="radio-inline"><input type="radio" name="category" value="public" checked>Public Board</label>
-			<label class="radio-inline"><input type="radio" name="category" value="private">Private Board</label>
+			<label class="radio-inline"><input type="radio" name="category" value="public" >Public Board</label>
+			<label class="radio-inline"><input type="radio" name="category" value="private" checked>Private Board</label>
 			<label class="radio-inline"><input type="radio" name="category" value="storage">Data Storage</label>
 			</c:when>
 			<c:otherwise>

@@ -1,5 +1,7 @@
 package sbkim.com.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.HashMap;
@@ -100,15 +102,17 @@ public class BoardController {
 	public String selectBoard(Model model, @RequestParam(value="category")String category,
 				@RequestParam(value="sort")String sort, String search,
 				@RequestParam(value="page", required=false, defaultValue="1")int page,
-				@RequestParam(value="range", required=false, defaultValue="1")int range) {
+				@RequestParam(value="range", required=false, defaultValue="1")int range, HttpSession session) {
 		
 		HashMap<String, Object>map = new HashMap<String, Object>();
+		String uno = (String)session.getAttribute("id");
 		map.put("sort", sort);
 		map.put("category", category);
 		map.put("search", search);
-		
+		map.put("uno", uno);
 		int listCnt = dao.getListCnt(map);		//전체 게시물 개수 
 		System.out.println("listCntL: "+ listCnt);
+		System.out.println("map??: "+ map);
 		
 		PageVO pageVo = new PageVO();
 		pageVo.pageInfo(page, range, listCnt);
