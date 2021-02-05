@@ -30,3 +30,7 @@
 ![image](https://user-images.githubusercontent.com/75067573/106985978-c6f6d380-67ad-11eb-9d34-d922ca71eef8.png)
 - Data Storage 다운로드 페이지 
 ![image](https://user-images.githubusercontent.com/75067573/106986110-058c8e00-67ae-11eb-913d-4293db31298d.png)
+- 회원가입 페이지
+![image](https://user-images.githubusercontent.com/75067573/106986195-366cc300-67ae-11eb-88a5-fea341e17fb5.png)
+- 로그인 페이지
+![image](https://user-images.githubusercontent.com/75067573/106986231-497f9300-67ae-11eb-965a-f377ab5a8670.png)
