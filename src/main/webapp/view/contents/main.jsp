@@ -19,8 +19,8 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script type="text/javascript">
 	$(function(){
-		location.href="/board/select.do?category=public&sort=cno"; 	/* Public Board로 이동 */
-		/* branch Test3 */
+		location.href="/board/select.do?category=public&sort=cno"; 	/* Board로 이동 */
+
 	});
 
 </script>

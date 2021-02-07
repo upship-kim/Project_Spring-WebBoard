@@ -76,7 +76,7 @@
 		
 		//메일주소 _셀렉 값 입력
 		$("#select").change(function(){
-			console.log($("#emailId").val());
+			//console.log($("#emailId").val());
 			if($("#emailId").val()==''){
 				alert('메일주소를 입력해주세요');
 			}else{
@@ -122,7 +122,7 @@
 					if($("#hp3").val().length<4) alert('휴대폰 번호를 확인해주세요');
 				return false;
 			}else{
-				alert('뚱이 안녕? ');
+				//alert('뚱이 안녕? ');
 				$("form #frm").submit();
 			}
 					
