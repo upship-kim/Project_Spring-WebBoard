@@ -99,7 +99,7 @@
 	}
 	
 	/* 페이징 버튼 */
-	function paging(page, range, rangeSize){		//search 값 연동해야함 
+	function paging(page, range, rangeSize){		
 		//console.log(page+' '+range+' '+rangeSize);		
 		var category = '${category}';
 		sort= '${sort}';
