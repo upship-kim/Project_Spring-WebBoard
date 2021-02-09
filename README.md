@@ -14,7 +14,7 @@
 
 
 ## Tech/FrameWork Used
- - Java, Oracle SQL
+ - Java, MS-SQL
  - HTML5, CSS3, JavaScript, Jquery, Ajax, Bootstrap
  - Apache Tom-cat 
  - Eclipse
